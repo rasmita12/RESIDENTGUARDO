@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#11084c</color>
+    <color name="colorPrimaryDark">#3F51B5</color>
+    <color name="colorPrimaryDarkloght">#3F51B5</color>
+    <color name="theme">#3F51B5</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="LoginButtoncolor">#00c0af</color>
+    <color name="RegisterButtoncolor">#00aae7</color>
+    <color name="White">#fff</color>
+    <color name="btn_orange">#f96e3a</color>
+    <color name="background">#cecece</color>
+
+
+</resources>

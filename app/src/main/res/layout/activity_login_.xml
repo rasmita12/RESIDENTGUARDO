@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/rel"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+    <LinearLayout
+        android:id="@+id/layoutLogin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/White"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_horizontal"
+            android:text="@string/app_name"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/White"
+            android:layout_marginBottom="20dp"
+            android:padding="10dp"
+            android:textSize="18dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Provide mobile number and password!"
+            android:textColor="#9d9d9d"
+            android:textSize="16dp" />
+
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mobile Number"
+            android:id="@+id/mobile_no"
+            android:singleLine="true"
+            android:maxLength="10"
+            android:inputType="phone"
+            app:met_floatingLabelTextColor="@android:color/black"
+            app:met_iconLeft="@mipmap/ic_call_black_24dp"
+            app:met_floatingLabel="highlight"
+            app:met_errorColor="@android:color/holo_red_dark"
+            app:met_iconPadding="0dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            app:met_errorColor="@android:color/holo_red_dark"
+            app:met_floatingLabel="highlight"
+            app:met_iconLeft="@mipmap/ic_lock_black_24dp"
+            app:met_iconPadding="0dp"
+             />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_clear_bt"
+                android:text="Clear"
+                />
+            //btnLogin
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_login_btn"
+                android:text="Login"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
