@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradientsplash_color">
+
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/guardo_logo"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="270dp">
+
+        <EditText
+            android:id="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="Mobile Number"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:visibility="gone"
+            android:background="@drawable/custom_edit_text"
+            />
+        <EditText
+            android:id="@+id/otp"
+            android:layout_below="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            android:text="3322"
+            android:gravity="center"
+            android:background="@drawable/custom_edit_text"/>
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/otp_submit"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        android:text="SUBMIT"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_login_btn"/>
+
+
+</RelativeLayout>

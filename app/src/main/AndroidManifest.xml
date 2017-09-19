@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="android.stalwartgroup.residentguardo">
 
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,6 +27,10 @@
         <activity android:name=".Activity.RegisterActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".Activity.MainActivity"></activity>
+        <activity android:name=".Activity.AppartmentListActivity"></activity>
+        <activity android:name=".Activity.FlatListActivity"></activity>
+        <activity android:name=".Activity.PendingActivity"></activity>
+        <activity android:name=".Activity.SendOtpActivity"></activity>
     </application>
 
 </manifest>
