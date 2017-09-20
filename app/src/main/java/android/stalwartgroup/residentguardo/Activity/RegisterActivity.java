@@ -14,16 +14,18 @@ import android.provider.MediaStore;
 import android.stalwartgroup.residentguardo.R;
 import android.stalwartgroup.residentguardo.Util.CheckInternet;
 import android.stalwartgroup.residentguardo.Util.Constants;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.json.JSONObject;
 
@@ -50,23 +52,29 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class RegisterActivity extends AppCompatActivity {
+
     Toolbar toolbar;
-    MaterialEditText user_name,password,c_password,flat_name,email,phno_number;
+    public static EditText user_name,apart_name,flat_name,email,phno_number;
+    public static String apartment_id,flat_id;
     Button reset_btn;
     RelativeLayout linn;
     CircleImageView profile_image;
     private static final int CAMERA_REQUEST = 1888;
     String imPath;
-    Uri fileUri;
     File imageFile;
     Uri picUri=null;
     Boolean picAvailable=false;
     String profileImage;
+    String resident_type;
+    RadioGroup radiogroup;
+    RadioButton residenttype,tenattype;
+    String resident_data,tenant_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("Register");
         toolbar.setTitleTextColor(Color.WHITE);
@@ -81,30 +89,39 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
+        radiogroup=(RadioGroup)findViewById(R.id.resident_type);
+        residenttype=(RadioButton) findViewById(R.id.resident);
+        tenattype=(RadioButton) findViewById(R.id.tenant);
         profile_image=(CircleImageView) findViewById(R.id.profile_image);
         linn=(RelativeLayout)findViewById(R.id.linn);
-        user_name=(MaterialEditText)findViewById(R.id.et_username);
-        password=(MaterialEditText)findViewById(R.id.et_password);
-        c_password=(MaterialEditText)findViewById(R.id.et_confirm_password);
-        flat_name=(MaterialEditText)findViewById(R.id.et_flat_name);
-        email=(MaterialEditText)findViewById(R.id.et_email);
-        phno_number=(MaterialEditText)findViewById(R.id.et_mobile);
-
+        user_name=(EditText)findViewById(R.id.et_username);
+        apart_name=(EditText)findViewById(R.id.et_aprt_name);
+        flat_name=(EditText)findViewById(R.id.et_flat_name);
+        email=(EditText)findViewById(R.id.et_email);
+        phno_number=(EditText)findViewById(R.id.et_mobile);
         reset_btn=(Button)findViewById(R.id.register_submit);
         reset_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 validatefield();
             }
         });
-        profile_image.setOnClickListener(new View.OnClickListener() {
+        apart_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                captureImage();
+                Intent i=new Intent(RegisterActivity.this,AppartmentListActivity.class);
+                startActivity(i);
             }
         });
+        flat_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(RegisterActivity.this,FlatListActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     private void captureImage() {
@@ -174,22 +191,25 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void validatefield() {
         String username=user_name.getText().toString();
-        String pass_word=password.getText().toString();
-        String cpass=c_password.getText().toString();
+        String aprtment=apart_name.getText().toString();
         String flat=flat_name.getText().toString();
         String emil=email.getText().toString();
         String mobil=phno_number.getText().toString();
-
+        if (residenttype.isChecked()) {
+            resident_data = residenttype.getText().toString();
+        } else if (tenattype.isChecked()) {
+            resident_data = tenattype.getText().toString();
+        }
         if(user_name.getText().toString().trim().length()<0){
-            //showsnackbar("Enter Username");
             Toast.makeText(RegisterActivity.this,"Enter Username",Toast.LENGTH_SHORT).show();
 
         }
-        else if(!pass_word.equals(cpass)){
-            Toast.makeText(RegisterActivity.this,"Password Not matching",Toast.LENGTH_SHORT).show();
+        else if(apart_name.getText().toString().trim().length()<0){
+            Toast.makeText(RegisterActivity.this,"Enter Your Apartment name",Toast.LENGTH_SHORT).show();
         }
+
         else if(flat_name.getText().toString().trim().length()<0){
-            Toast.makeText(RegisterActivity.this,"Enter Your Flatname",Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this,"Enter Your Flat name",Toast.LENGTH_SHORT).show();
         }
        else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
             Toast.makeText(RegisterActivity.this,"Invalid Email Address",Toast.LENGTH_SHORT).show();
@@ -205,17 +225,18 @@ public class RegisterActivity extends AppCompatActivity {
     private void CheckinServer() {
         if (CheckInternet.getNetworkConnectivityStatus(this)) {
             Checkin_register checkin = new Checkin_register();
-            String checkin_type = "1";
             String username=user_name.getText().toString();
-            String pass_word=password.getText().toString();
-            String cpass=c_password.getText().toString();
-            String flat=flat_name.getText().toString();
             String emil=email.getText().toString();
             String mobil=phno_number.getText().toString();
-            String photo=profileImage;
-            checkin.execute(username,pass_word,flat,emil,mobil,photo);
+            String flatname=flat_name.getText().toString();
+            if (residenttype.isChecked()) {
+                resident_data = residenttype.getText().toString();
+            } else if (tenattype.isChecked()) {
+                resident_data = tenattype.getText().toString();
+            }
+            checkin.execute(mobil,username,emil,resident_data,apartment_id,flatname);
         } else {
-            Toast.makeText(getApplicationContext(),"No Internet",Toast.LENGTH_LONG).show();
+            showsnackbar("No Internet");
         }
     }
 
@@ -242,12 +263,12 @@ public class RegisterActivity extends AppCompatActivity {
         protected Void doInBackground(String... params) {
 
             try {
-                String userName = params[0];
-                String password = params[1];
-                String flat = params[2];
-                String email = params[3];
-                String mobile = params[4];
-                String photo = params[5];
+                String mobile = params[0];
+                String userName = params[1];
+                String email = params[2];
+                String residentType = params[3];
+                String apartname = params[4];
+                String flat = params[5];
                 InputStream in = null;
                 int resCode = -1;
 
@@ -266,10 +287,10 @@ public class RegisterActivity extends AppCompatActivity {
                 Uri.Builder builder = new Uri.Builder()
                         .appendQueryParameter("name", userName)
                         .appendQueryParameter("mobile", mobile)
-                        .appendQueryParameter("password", password)
+                        .appendQueryParameter("location_id", apartname)
+                        .appendQueryParameter("user_type",residentType)
                         .appendQueryParameter("email", email)
-                        .appendQueryParameter("plot_no", flat)
-                        .appendQueryParameter("photo", photo);
+                        .appendQueryParameter("flat_no",flat);
 
                 //.appendQueryParameter("deviceid", deviceid);
                 String query = builder.build().getEncodedQuery();
@@ -301,9 +322,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                 /**
                  * {
-                 "checkin_id": null,
+                 "locationDetail_id": "5",
                  "status": 1,
-                 "message": "Successfully Checked In."
+                 "message": "Successfully inserted wait for the approval."
                  }
                  * */
 
@@ -311,13 +332,17 @@ public class RegisterActivity extends AppCompatActivity {
                 if (response != null && response.length() > 0) {
                     JSONObject res = new JSONObject(response.trim());
                     server_status = res.optInt("status");
-                    if (server_status == 1) {
-                        id = res.optString("checkintype_id");
+                    if (server_status == 2) {
+                        id = res.optString("locationDetail_id");
                         server_message = res.optString("message");
 
                         //showsnackbar(server_message);
 
-                    } else {
+                    }
+                    else if(server_status==1) {
+                        server_message = res.optString("message");
+
+                    }else {
                         server_message = "Invalid Credentials";
                     }
                 }
@@ -349,11 +374,25 @@ public class RegisterActivity extends AppCompatActivity {
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
             progressDialog.cancel();
-            if (server_status == 1) {
-            } else {
-                Toast.makeText(getApplicationContext(),server_message,Toast.LENGTH_LONG).show();
+            if (server_status == 2 || server_status==1) {
+                showsnackbar(server_message);
+                Intent intent=new Intent(RegisterActivity.this,SendOtpActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+            else {
+                showsnackbar(server_message);
+
             }
         }
+    }
+
+    private void showsnackbar(String message) {
+        Snackbar snackbar = Snackbar
+                .make(linn, message, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
     /*private void showsnackbar(String message) {

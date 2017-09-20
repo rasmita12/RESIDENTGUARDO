@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradientsplash_color">
+
+    <TextView
+        android:layout_width="250dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/White"
+        android:text="Please Enter the OTP you got on the registered Phone number"/>
+
+        <EditText
+            android:id="@+id/otp"
+            android:layout_below="@+id/register"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_centerInParent="true"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            android:text="3322"
+            android:backgroundTint="@color/White"
+            android:gravity="center"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resend"
+        android:textColor="@color/White"
+        android:textStyle="bold|italic"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp"
+        android:padding="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Number"
+        android:textColor="@color/White"
+        android:textStyle="bold|italic"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:padding="10dp"/>
+
+    <Button
+        android:id="@+id/otp_submit"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        android:text="SUBMIT"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_login_btn"/>
+
+
+</RelativeLayout>

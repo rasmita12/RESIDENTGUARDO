@@ -10,6 +10,8 @@
     <color name="White">#fff</color>
     <color name="btn_orange">#f96e3a</color>
     <color name="background">#cecece</color>
+    <color name="black">#000000</color>
+    <color name="green">#008623</color>
 
 
 </resources>
