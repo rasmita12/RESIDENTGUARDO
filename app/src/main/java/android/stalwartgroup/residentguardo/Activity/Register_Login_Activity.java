@@ -11,7 +11,7 @@ import android.widget.Button;
  * Created by mobileapplication on 9/18/17.
  */
 
-public class Register_Login_Activity extends AppCompatActivity {
+public class Register_Login_Activity extends AppCompatActivity   {
 
     Button register_btn,login_btn;
 
@@ -36,5 +36,7 @@ public class Register_Login_Activity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
     }
 }

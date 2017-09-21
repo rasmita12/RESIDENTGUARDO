@@ -1,21 +1,15 @@
 package android.stalwartgroup.residentguardo.Activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.stalwartgroup.residentguardo.R;
 import android.stalwartgroup.residentguardo.Util.CheckInternet;
 import android.stalwartgroup.residentguardo.Util.Constants;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -25,6 +19,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -42,8 +37,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -54,9 +47,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RegisterActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    public static EditText user_name,apart_name,flat_name,email,phno_number;
+    public static EditText user_name,apart_name,flat_name,email,phno_number,phone,et_otp;
     public static String apartment_id,flat_id;
-    Button reset_btn;
+    Button reset_btn,otp_button;
     RelativeLayout linn;
     CircleImageView profile_image;
     private static final int CAMERA_REQUEST = 1888;
@@ -69,12 +62,18 @@ public class RegisterActivity extends AppCompatActivity {
     RadioGroup radiogroup;
     RadioButton residenttype,tenattype;
     String resident_data,tenant_data;
+    TextView resend_otp;
+    RelativeLayout relative_lay_register,relative_otp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+
+        resend_otp=(TextView)findViewById(R.id.resend_otp);
+        relative_lay_register=(RelativeLayout)findViewById(R.id.relative_lay_register);
+        relative_otp=(RelativeLayout)findViewById(R.id.relative_otp);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("Register");
         toolbar.setTitleTextColor(Color.WHITE);
@@ -95,11 +94,14 @@ public class RegisterActivity extends AppCompatActivity {
         profile_image=(CircleImageView) findViewById(R.id.profile_image);
         linn=(RelativeLayout)findViewById(R.id.linn);
         user_name=(EditText)findViewById(R.id.et_username);
+        phone=(EditText)findViewById(R.id.et_phone);
         apart_name=(EditText)findViewById(R.id.et_aprt_name);
         flat_name=(EditText)findViewById(R.id.et_flat_name);
         email=(EditText)findViewById(R.id.et_email);
+        et_otp=(EditText)findViewById(R.id.et_otp);
         phno_number=(EditText)findViewById(R.id.et_mobile);
         reset_btn=(Button)findViewById(R.id.register_submit);
+        otp_button=(Button)findViewById(R.id.otp_submit);
         reset_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,71 +123,40 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-    }
-
-    private void captureImage() {
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            if (cameraIntent.resolveActivity(RegisterActivity.this.getPackageManager()) != null) {
-                // Create the File where the photo should go
-                File photoFile = null;
-                try {
-                    photoFile = createImageFile();
-                } catch (IOException ex) {
-                    // Error occurred while creating the File
-                }
-                // Continue only if the File was successfully created
-                if (photoFile != null) {
-                    Uri photoURI = FileProvider.getUriForFile(RegisterActivity.this,
-                            "androidapp.com.stalwartsecurity",
-                            photoFile);
-                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
-                }
+        otp_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                otpvalidate();
             }
-        }
-        else{
-            imPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/picture.jpg";
-            imageFile = new File(imPath);
-            picUri = Uri.fromFile(imageFile); // convert path to Uri
-            cameraIntent.putExtra( MediaStore.EXTRA_OUTPUT, picUri );
-            startActivityForResult(cameraIntent, CAMERA_REQUEST);
-        }
+        });
+        resend_otp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validatefield();
 
-    }
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = RegisterActivity.this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        imPath = image.getAbsolutePath();
-        imageFile = new File(imPath);
-        picUri = Uri.fromFile(image); // convert path to Uri
-        return image;
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            // imPath=picUri.getPath();
-            // Bitmap photo = (Bitmap) data.getExtras().get("data");
-            try {
-                Bitmap photo = MediaStore.Images.Media.getBitmap(RegisterActivity.this.getContentResolver(),picUri);
-                picAvailable=true;
-                profile_image.setImageBitmap(photo);
-                 profileImage=profile_image.toString();
-
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        });
 
+    }
+
+    private void otpvalidate() {
+       if(et_otp.getText().toString().trim().length()<=0){
+           showsnackbar("Enter OTP");
+       }
+       else{
+            OtpsendToserver();
+       }
+    }
+
+    private void OtpsendToserver() {
+        if (CheckInternet.getNetworkConnectivityStatus(this)) {
+            Checkin_otp checkin = new Checkin_otp();
+            String mobil=phno_number.getText().toString();
+            String otp=et_otp.getText().toString();
+
+            checkin.execute(mobil,otp);
+        } else {
+            showsnackbar("No Internet");
         }
     }
 
@@ -334,7 +305,7 @@ public class RegisterActivity extends AppCompatActivity {
                     server_status = res.optInt("status");
                     if (server_status == 2) {
                         id = res.optString("locationDetail_id");
-                        server_message = res.optString("message");
+                        server_message = res.optString("otp");
 
                         //showsnackbar(server_message);
 
@@ -374,30 +345,155 @@ public class RegisterActivity extends AppCompatActivity {
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
             progressDialog.cancel();
-            if (server_status == 2 || server_status==1) {
+            if (server_status == 0){
                 showsnackbar(server_message);
-                Intent intent=new Intent(RegisterActivity.this,SendOtpActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
             }
             else {
                 showsnackbar(server_message);
-
+                calltoOtpservice();
             }
         }
     }
 
+    private void calltoOtpservice() {
+        relative_lay_register.setVisibility(View.GONE);
+        relative_otp.setVisibility(View.VISIBLE);
+    }
     private void showsnackbar(String message) {
         Snackbar snackbar = Snackbar
                 .make(linn, message, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 
-    /*private void showsnackbar(String message) {
-        Snackbar snackbar = Snackbar
-                .make(linn, message, Snackbar.LENGTH_LONG);
-        snackbar.show();
-    }*/
+    private class Checkin_otp extends AsyncTask<String, Void, Void> {
+
+        private static final String TAG = "SynchMobnum";
+        private ProgressDialog progressDialog = null;
+        int server_status;
+        String id, mobile, name;
+        String server_message;
+        String user_type;
+        String photo;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if (progressDialog == null) {
+                progressDialog = ProgressDialog.show(RegisterActivity.this, "Loading", "Please wait...");
+            }
+            // onPreExecuteTask();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+            try {
+                String mobile = params[0];
+                String otp = params[1];
+                InputStream in = null;
+                int resCode = -1;
+
+                String link = Constants.MAINURL+Constants.VERIFY_OTP;
+                URL url = new URL(link);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setAllowUserInteraction(false);
+                conn.setInstanceFollowRedirects(true);
+                conn.setRequestMethod("POST");
+
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("mobile", mobile)
+                        .appendQueryParameter("otp", otp);
+
+                //.appendQueryParameter("deviceid", deviceid);
+                String query = builder.build().getEncodedQuery();
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+
+                conn.connect();
+                resCode = conn.getResponseCode();
+                if (resCode == HttpURLConnection.HTTP_OK) {
+                    in = conn.getInputStream();
+                }
+                if (in == null) {
+                    return null;
+                }
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                String response = "", data = "";
+
+                while ((data = reader.readLine()) != null) {
+                    response += data + "\n";
+                }
+
+                Log.i(TAG, "Response : " + response);
+
+                /**
+                 * {
+                 "locationDetail_id": "5",
+                 "status": 1,
+                 "message": "Successfully inserted wait for the approval."
+                 }
+                 * */
+
+
+                if (response != null && response.length() > 0) {
+                    JSONObject res = new JSONObject(response.trim());
+                    server_status = res.optInt("status");
+                    if (server_status == 1) {
+                        server_message = res.optString("message");
+                    }else {
+                        server_message = "Invalid Credentials";
+                    }
+                }
+
+                return null;
+
+            } catch (SocketTimeoutException exception) {
+                server_message = "Network Error";
+                Log.e( "SynchMobnum : doInBackground", exception.toString());
+            } catch (ConnectException exception) {
+                server_message = "Network Error";
+                Log.e("SynchMobnum : doInBackground", exception.toString());
+            } catch (MalformedURLException exception) {
+                server_message = "Network Error";
+                Log.e( "SynchMobnum : doInBackground", exception.toString());
+            } catch (IOException exception) {
+                server_message = "Network Error";
+                Log.e( "SynchMobnum : doInBackground", exception.toString());
+            } catch (Exception exception) {
+                server_message = "Network Error";
+                Log.e( "SynchMobnum : doInBackground", exception.toString());
+            }
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void user) {
+            super.onPostExecute(user);
+            progressDialog.cancel();
+            if (server_status == 0){
+                showsnackbar(server_message);
+            }
+            else {
+                Intent i=new Intent(RegisterActivity.this,PendingActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(i);
+            }
+        }
+    }
+
 }

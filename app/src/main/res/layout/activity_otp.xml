@@ -4,51 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradientsplash_color">
+    android:background="@drawable/gradientsplash_color"
+    android:id="@+id/relative_otp"
+    android:visibility="gone">
 
-    <ImageView
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/guardo_logo"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="250dp"
+        android:gravity="center"
         android:layout_height="wrap_content"
-        android:layout_marginTop="270dp">
-
-        <EditText
-            android:id="@+id/register"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:text="Mobile Number"
-            android:textColor="@color/White"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:visibility="gone"
-            android:background="@drawable/custom_edit_text"
-            />
-        <EditText
-            android:id="@+id/otp"
-            android:layout_below="@+id/register"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:editable="false"
-            android:focusable="false"
-            android:textColor="@color/White"
-            android:textStyle="bold"
-            android:text="3322"
-            android:gravity="center"
-            android:background="@drawable/custom_edit_text"/>
-
-    </RelativeLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/White"
+        android:text="Please Enter the OTP you got on the registered Phone number"/>
+    <EditText
+        android:id="@+id/et_otp"
+        android:layout_below="@+id/register"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_centerInParent="true"
+        android:textColor="@color/White"
+        android:textStyle="bold"
+        android:hint="3322"
+        android:inputType="number"
+        android:textColorHint="@color/White"
+        android:backgroundTint="@color/White"
+        android:gravity="center"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="Phone Number"
+        android:gravity="center"
+        android:visibility="gone"
+        android:inputType="phone"
+        android:maxLength="10"
+        android:id="@+id/et_phone"
+        android:background="@drawable/edittext_border"
+        android:layout_margin="20dp"/>
+    <TextView
+        android:id="@+id/resend_otp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resend"
+        android:textColor="@color/White"
+        android:textStyle="bold|italic"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp"
+        android:padding="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:textColor="@color/White"
+        android:textStyle="bold|italic"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:padding="10dp"/>
     <Button
         android:id="@+id/otp_submit"
         android:layout_width="match_parent"
@@ -62,6 +77,5 @@
         android:text="SUBMIT"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_login_btn"/>
-
 
 </RelativeLayout>

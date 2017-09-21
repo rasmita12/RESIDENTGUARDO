@@ -13,6 +13,7 @@ public class Constants {
     public static String FLAT_LIST="unitDetailList";
     public static String SHAREDPREFERENCE_KEY="stalwart";
     public static String APARTMENT_ID="apartment_id";
+    public static String VERIFY_OTP="verifyOTP";
 
 
 }

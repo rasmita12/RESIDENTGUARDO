@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity android:name=".Activity.SplasSceen">
-            <intent-filter>
+          <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,7 +26,9 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
         <activity android:name=".Activity.RegisterActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name=".Activity.MainActivity"></activity>
+        <activity android:name=".Activity.HomeActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
         <activity android:name=".Activity.AppartmentListActivity"></activity>
         <activity android:name=".Activity.FlatListActivity"></activity>
         <activity android:name=".Activity.PendingActivity"></activity>

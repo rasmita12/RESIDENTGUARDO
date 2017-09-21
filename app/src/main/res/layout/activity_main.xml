@@ -1,18 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="android.stalwartgroup.residentguardo.Activity.MainActivity">
+    android:background="@color/background">
+    <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="20dp"
+       android:id="@+id/relative_fodetail"
+       android:layout_marginLeft="20dp">
+       <ListView
+           android:layout_width="wrap_content"
+           android:layout_height="250dp"
+           android:id="@+id/list_home">
 
-    <TextView
+       </ListView>
+   </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/White"
+        android:layout_alignParentBottom="true">
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="-30dp"
+        android:layout_below="@+id/relative_fodetail"
+        android:background="@drawable/backgroundborder">
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/relative_design"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/fo_checkin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="70dp">
+            <ImageView
+                android:id="@+id/unit_img1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/cerclelayout"
+                android:src="@mipmap/ic_camera_black_24dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VISIT"
+                android:layout_below="@+id/unit_img1"
+                android:textSize="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorPrimary"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/fo_incident"
+            android:layout_toRightOf="@+id/fo_checkin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp">
+            <ImageView
+                android:id="@+id/unit_img2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/cerclelayout"
+                android:src="@mipmap/ic_camera_black_24dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VISIT"
+                android:layout_below="@+id/unit_img2"
+                android:textSize="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorPrimary"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_design"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/relative_design">
 
-</android.support.constraint.ConstraintLayout>
+        <RelativeLayout
+            android:id="@+id/fo_incident1"
+            android:layout_toRightOf="@+id/fo_checkin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="70dp">
+            <ImageView
+                android:id="@+id/unit_img21"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/cerclelayout"
+                android:src="@mipmap/ic_camera_black_24dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VISIT"
+                android:layout_below="@+id/unit_img21"
+                android:textSize="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorPrimary"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fo_incident3"
+            android:layout_toRightOf="@+id/fo_checkin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp">
+            <ImageView
+                android:id="@+id/unit_img23"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/cerclelayout"
+                android:src="@mipmap/ic_camera_black_24dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VISIT"
+                android:layout_below="@+id/unit_img23"
+                android:textSize="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorPrimary"/>
+        </RelativeLayout>
+        </LinearLayout>
+        </RelativeLayout>
+
+
+
+</RelativeLayout>

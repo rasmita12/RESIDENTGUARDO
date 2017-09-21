@@ -7,6 +7,14 @@
     android:id="@+id/linn"
     android:background="@color/White">
 
+    <include android:id="@+id/relative_otp"
+        layout="@layout/activity_otp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relative_lay_register">
+
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -19,9 +27,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/camera"
-            android:layout_marginTop="50dp"
-            android:layout_above="@+id/register_submit">
+            android:id="@+id/relative_register"
+            android:layout_marginTop="50dp"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -29,7 +36,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="60dp"
                 android:background="@drawable/guardo_logo"
                 app:civ_border_color="@color/colorPrimary"
                 app:civ_border_width="2dp" />
@@ -121,19 +128,18 @@
 
             </RelativeLayout>
             </ScrollView>
-
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:id="@+id/register_submit"
+                android:text="REGISTER"
+                android:textColor="@color/White"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorPrimary"
+                android:layout_marginBottom="30dp"/>
         </RelativeLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:id="@+id/register_submit"
-        android:text="REGISTER"
-        android:textColor="@color/White"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:layout_marginBottom="20dp"/>
 </RelativeLayout>
