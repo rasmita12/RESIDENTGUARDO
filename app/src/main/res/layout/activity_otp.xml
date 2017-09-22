@@ -25,7 +25,7 @@
         android:layout_centerInParent="true"
         android:textColor="@color/White"
         android:textStyle="bold"
-        android:hint="3322"
+        android:hint="Enter OTP"
         android:inputType="number"
         android:textColorHint="@color/White"
         android:backgroundTint="@color/White"

@@ -20,7 +20,7 @@ public class Register_Login_Activity extends AppCompatActivity   {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
         register_btn=(Button)findViewById(R.id.register);
-        login_btn=(Button)findViewById(R.id.login);
+        //login_btn=(Button)findViewById(R.id.login);
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,13 +29,13 @@ public class Register_Login_Activity extends AppCompatActivity   {
                 startActivity(i);
             }
         });
-        login_btn.setOnClickListener(new View.OnClickListener() {
+       /* login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(Register_Login_Activity.this,Login_Activity.class);
                 startActivity(i);
             }
-        });
+        });*/
 
 
     }

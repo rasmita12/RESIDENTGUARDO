@@ -91,7 +91,7 @@
                     android:id="@+id/resident"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Resident"
+                    android:text="Owner"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="10dp"/>
                 <RadioButton

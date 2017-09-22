@@ -1,15 +1,19 @@
 package android.stalwartgroup.residentguardo.Activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.stalwartgroup.residentguardo.Interface.OTPListener;
 import android.stalwartgroup.residentguardo.R;
 import android.stalwartgroup.residentguardo.Util.CheckInternet;
 import android.stalwartgroup.residentguardo.Util.Constants;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -44,7 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by mobileapplication on 9/18/17.
  */
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements OTPListener {
 
     Toolbar toolbar;
     public static EditText user_name,apart_name,flat_name,email,phno_number,phone,et_otp;
@@ -64,6 +68,10 @@ public class RegisterActivity extends AppCompatActivity {
     String resident_data,tenant_data;
     TextView resend_otp;
     RelativeLayout relative_lay_register,relative_otp;
+    String otp;
+    private static final int PERMISSION_ACCESS_COARSE_LOCATION =100;
+    private static final int PERMISSION_ACCESS_MESSAGE =101;
+    private static final int PERMISSION_ACCESS_CALL =102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,11 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS},
+                PERMISSION_ACCESS_MESSAGE);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
+                PERMISSION_ACCESS_CALL);
         resend_otp=(TextView)findViewById(R.id.resend_otp);
         relative_lay_register=(RelativeLayout)findViewById(R.id.relative_lay_register);
         relative_otp=(RelativeLayout)findViewById(R.id.relative_otp);
@@ -105,7 +118,6 @@ public class RegisterActivity extends AppCompatActivity {
         reset_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 validatefield();
             }
         });
@@ -152,7 +164,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (CheckInternet.getNetworkConnectivityStatus(this)) {
             Checkin_otp checkin = new Checkin_otp();
             String mobil=phno_number.getText().toString();
-            String otp=et_otp.getText().toString();
+             otp=et_otp.getText().toString();
 
             checkin.execute(mobil,otp);
         } else {
@@ -161,11 +173,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void validatefield() {
-        String username=user_name.getText().toString();
-        String aprtment=apart_name.getText().toString();
-        String flat=flat_name.getText().toString();
-        String emil=email.getText().toString();
-        String mobil=phno_number.getText().toString();
         if (residenttype.isChecked()) {
             resident_data = residenttype.getText().toString();
         } else if (tenattype.isChecked()) {
@@ -194,6 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void CheckinServer() {
+        OtpReader.bind(RegisterActivity.this);
         if (CheckInternet.getNetworkConnectivityStatus(this)) {
             Checkin_register checkin = new Checkin_register();
             String username=user_name.getText().toString();
@@ -211,12 +219,35 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void otpReceived(String messageText) {
+
+         otp=messageText.substring(messageText.lastIndexOf(".") -4,messageText.length()-11);
+            et_otp.setText(otp);
+            otp_button.performClick();
+    }
+
+    @Override
+    public int length() {
+        return 0;
+    }
+
+    @Override
+    public char charAt(int i) {
+        return 0;
+    }
+
+    @Override
+    public CharSequence subSequence(int i, int i1) {
+        return null;
+    }
+
     private class Checkin_register extends AsyncTask<String, Void, Void> {
 
         private static final String TAG = "SynchMobnum";
         private ProgressDialog progressDialog = null;
         int server_status;
-        String id, mobile, name;
+        String id, otp_no, name;
         String server_message;
         String user_type;
         String photo;
@@ -305,7 +336,8 @@ public class RegisterActivity extends AppCompatActivity {
                     server_status = res.optInt("status");
                     if (server_status == 2) {
                         id = res.optString("locationDetail_id");
-                        server_message = res.optString("otp");
+                        otp_no = res.optString("otp");
+                        server_message = res.optString("message");
 
                         //showsnackbar(server_message);
 
@@ -349,7 +381,13 @@ public class RegisterActivity extends AppCompatActivity {
                 showsnackbar(server_message);
             }
             else {
+
+                SharedPreferences sharedPreferences = RegisterActivity.this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(Constants.REGISTER_LOCATIONDETAIL_ID, id);
+                editor.commit();
                 showsnackbar(server_message);
+                showsnackbar(otp_no);
                 calltoOtpservice();
             }
         }
