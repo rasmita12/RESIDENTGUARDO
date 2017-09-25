@@ -1,63 +1,120 @@
 package android.stalwartgroup.residentguardo.Firebase;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.stalwartgroup.residentguardo.Activity.HomeActivity;
 import android.stalwartgroup.residentguardo.R;
-import android.support.v4.app.NotificationCompat;
+import android.stalwartgroup.residentguardo.Util.Config;
+import android.stalwartgroup.residentguardo.Util.NotificationUtils;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = "MyFirebaseMsgService";
-    private Object context;
-    // public  Context context;
+    private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
+
+    private NotificationUtils notificationUtils;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        //Displaying data in log
-        //It is optional
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-        Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
+        Log.e(TAG, "From: " + remoteMessage.getFrom());
+        handleNotification(remoteMessage.getNotification().getBody());
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null) {
+            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
+            handleNotification(remoteMessage.getNotification().getBody());
+        }
+        else if (remoteMessage.getNotification() == null) {
+            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
+            handleNotification(remoteMessage.getNotification().getBody());
+        }
 
-        //Calling method to generate notification
-        sendNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
+        // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0) {
+            Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
+
+            try {
+                JSONObject json = new JSONObject(remoteMessage.getData().toString());
+                handleDataMessage(json);
+            } catch (Exception e) {
+                Log.e(TAG, "Exception: " + e.getMessage());
+            }
+        }
     }
 
-    //This method is only generating push notification
-    //It is same as we did in earlier posts
-    private void sendNotification(String messageBody, String title) {
-        Intent intent = new Intent(this, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+    private void handleNotification(String message) {
 
-        Uri defaultSoundUri= Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.notification_guardo);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(getNotificationIcon())
-                .setColor(getApplicationContext().getResources().getColor(R.color.colorAccent))
-                .setContentTitle(title)
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-               .setSound(defaultSoundUri)
-               // .setColor(Color.BLUE)
-                .setContentIntent(pendingIntent);
+            // app is in foreground, broadcast the push message
+            Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
+            pushNotification.putExtra("message", message);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0, notificationBuilder.build());
+            // play notification sound
+            NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+            notificationUtils.playNotificationSound();
     }
 
-    private int getNotificationIcon() {
-        boolean whiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
-        return whiteIcon ? R.drawable.logo_without_name : R.drawable.logo_without_name;
+    private void handleDataMessage(JSONObject json) {
+        Log.e(TAG, "push json: " + json.toString());
+
+        try {
+            JSONObject data = json.getJSONObject("data");
+
+            String title = data.getString("title");
+            String message = data.getString("message");
+            boolean isBackground = data.getBoolean("is_background");
+            String imageUrl = data.getString("image");
+            String timestamp = data.getString("timestamp");
+            JSONObject payload = data.getJSONObject("payload");
+
+            Log.e(TAG, "title: " + title);
+            Log.e(TAG, "message: " + message);
+            Log.e(TAG, "isBackground: " + isBackground);
+            Log.e(TAG, "payload: " + payload.toString());
+            Log.e(TAG, "imageUrl: " + imageUrl);
+            Log.e(TAG, "timestamp: " + timestamp);
+            Uri defaultSoundUri= Uri.parse("android.resource://"+this.getPackageName()+"/"+ R.raw.notification_guardo);
+
+                // app is in foreground, broadcast the push message
+                Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
+                pushNotification.putExtra("message", message);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
+
+                // play notification sound
+                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+                Log.e("Notofication","sound about to play");
+
+                notificationUtils.playNotificationSound();
+
+        } catch (JSONException e) {
+            Log.e(TAG, "Json Exception: " + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "Exception: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Showing notification with text only
+     */
+    private void showNotificationMessage(Context context, String title, String message, String timeStamp, Intent intent) {
+        notificationUtils = new NotificationUtils(context);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        notificationUtils.showNotificationMessage(title, message, timeStamp, intent);
+    }
+
+    /**
+     * Showing notification with text and image
+     */
+    private void showNotificationMessageWithBigImage(Context context, String title, String message, String timeStamp, Intent intent, String imageUrl) {
+        notificationUtils = new NotificationUtils(context);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        notificationUtils.showNotificationMessage(title, message, timeStamp, intent, imageUrl);
     }
 }

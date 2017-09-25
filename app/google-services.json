@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "560280848500",
-    "firebase_url": "https://residentguardo.firebaseio.com",
-    "project_id": "residentguardo",
-    "storage_bucket": "residentguardo.appspot.com"
+    "project_number": "255705756911",
+    "firebase_url": "https://residentguardo-ca1ae.firebaseio.com",
+    "project_id": "residentguardo-ca1ae",
+    "storage_bucket": "residentguardo-ca1ae.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:560280848500:android:844b4fb2c60f61f1",
+        "mobilesdk_app_id": "1:255705756911:android:844b4fb2c60f61f1",
         "android_client_info": {
           "package_name": "android.stalwartgroup.residentguardo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "560280848500-ls9t2s1ndj0u367h3jv8gdc2g1ubvplr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "android.stalwartgroup.residentguardo",
-            "certificate_hash": "0926da27c58a4fc21e4be8a8ebee976d59b0e5c9"
-          }
-        },
-        {
-          "client_id": "560280848500-ugu5focl8u83qothba0u0f35l83ec2ua.apps.googleusercontent.com",
+          "client_id": "255705756911-p9m53n4bjmrtljbrhcj3ncm09lm00mm0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDVwgdooHp_RH7al3t0EqvsBXbwfkRyuoo"
+          "current_key": "AIzaSyDR_C3lpMIgIc5gvbr5hYh8swslO-5oAdM"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "560280848500-ugu5focl8u83qothba0u0f35l83ec2ua.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

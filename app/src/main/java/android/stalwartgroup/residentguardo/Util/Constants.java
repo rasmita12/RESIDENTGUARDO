@@ -26,5 +26,6 @@ public class Constants {
     public static String USER_TYPE="usertype";
     public static String USER_FLAT_NAME="userflatname";
     public static String USER_APARTMENT_NAME="useraprtment";
+    public static String FCM_ID="fcmid";
 
 }

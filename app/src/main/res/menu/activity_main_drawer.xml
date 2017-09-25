@@ -7,20 +7,20 @@
 
     </group>
 
-    <item android:title="VISITORS">
+    <item android:title="SETTINGS">
         <menu>
             <item
-                android:id="@+id/add_visitors"
-                android:title="Entry " />
+                android:id="@+id/resident_profile"
+                android:title="Profile " />
             <item
-                android:id="@+id/pending_visitors"
-                android:title="Pending Verification " />
-            <item
+                android:id="@+id/resident_logout"
+                android:title="Logout " />
+            <!--<item
                 android:id="@+id/exit_visitors"
                 android:title="Exit " />
             <item
                 android:id="@+id/exitD_visitors"
-                android:title="List " />
+                android:title="List " />-->
         </menu>
     </item>
     </menu>

@@ -2,6 +2,7 @@ package android.stalwartgroup.residentguardo.Activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -72,6 +73,9 @@ public class RegisterActivity extends AppCompatActivity implements OTPListener {
     private static final int PERMISSION_ACCESS_COARSE_LOCATION =100;
     private static final int PERMISSION_ACCESS_MESSAGE =101;
     private static final int PERMISSION_ACCESS_CALL =102;
+    private static final String TAG = RegisterActivity.class.getSimpleName();
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private TextView txtRegId, txtMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
