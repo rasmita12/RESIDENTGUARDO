@@ -76,6 +76,7 @@ public class RegisterActivity extends AppCompatActivity implements OTPListener {
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView txtRegId, txtMessage;
+    private String fcm_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,10 @@ public class RegisterActivity extends AppCompatActivity implements OTPListener {
                 PERMISSION_ACCESS_MESSAGE);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
                 PERMISSION_ACCESS_CALL);
+
+        fcm_id = RegisterActivity.this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.FCM_ID, null);
+
+
         resend_otp=(TextView)findViewById(R.id.resend_otp);
         relative_lay_register=(RelativeLayout)findViewById(R.id.relative_lay_register);
         relative_otp=(RelativeLayout)findViewById(R.id.relative_otp);
@@ -217,7 +222,7 @@ public class RegisterActivity extends AppCompatActivity implements OTPListener {
             } else if (tenattype.isChecked()) {
                 resident_data = tenattype.getText().toString();
             }
-            checkin.execute(mobil,username,emil,resident_data,apartment_id,flatname);
+            checkin.execute(mobil,username,emil,resident_data,apartment_id,flatname,fcm_id);
         } else {
             showsnackbar("No Internet");
         }
@@ -275,6 +280,7 @@ public class RegisterActivity extends AppCompatActivity implements OTPListener {
                 String residentType = params[3];
                 String apartname = params[4];
                 String flat = params[5];
+                String fcmid = params[6];
                 InputStream in = null;
                 int resCode = -1;
 
@@ -296,7 +302,8 @@ public class RegisterActivity extends AppCompatActivity implements OTPListener {
                         .appendQueryParameter("location_id", apartname)
                         .appendQueryParameter("user_type",residentType)
                         .appendQueryParameter("email", email)
-                        .appendQueryParameter("flat_no",flat);
+                        .appendQueryParameter("plot_no",flat)
+                        .appendQueryParameter("firebase_reg_id",fcmid);
 
                 //.appendQueryParameter("deviceid", deviceid);
                 String query = builder.build().getEncodedQuery();
@@ -328,9 +335,11 @@ public class RegisterActivity extends AppCompatActivity implements OTPListener {
 
                 /**
                  * {
-                 "locationDetail_id": "5",
+                 "PreRegistration_id": "2",
+                 "mobile": "9460932771",
+                 "otp": "9723",
                  "status": 1,
-                 "message": "Successfully inserted wait for the approval."
+                 "message": "Inserted details but mobile number verfication is pending."
                  }
                  * */
 
@@ -338,18 +347,15 @@ public class RegisterActivity extends AppCompatActivity implements OTPListener {
                 if (response != null && response.length() > 0) {
                     JSONObject res = new JSONObject(response.trim());
                     server_status = res.optInt("status");
-                    if (server_status == 2) {
-                        id = res.optString("locationDetail_id");
+                    if (server_status == 1) {
+                        id = res.optString("PreRegistration_id");
                         otp_no = res.optString("otp");
                         server_message = res.optString("message");
 
                         //showsnackbar(server_message);
 
                     }
-                    else if(server_status==1) {
-                        server_message = res.optString("message");
-
-                    }else {
+                   else {
                         server_message = "Invalid Credentials";
                     }
                 }
@@ -388,7 +394,7 @@ public class RegisterActivity extends AppCompatActivity implements OTPListener {
 
                 SharedPreferences sharedPreferences = RegisterActivity.this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(Constants.REGISTER_LOCATIONDETAIL_ID, id);
+                editor.putString(Constants.REGISTER_ID, id);
                 editor.commit();
                 showsnackbar(server_message);
                 showsnackbar(otp_no);
@@ -481,9 +487,12 @@ public class RegisterActivity extends AppCompatActivity implements OTPListener {
 
                 /**
                  * {
-                 "locationDetail_id": "5",
+                 {
+                 "PreregistrationDetail_id": "1",
+                 "is_approved": "2",
                  "status": 1,
-                 "message": "Successfully inserted wait for the approval."
+                 "message": "Valid data but wait for the admin approval."
+                 }
                  }
                  * */
 

@@ -5,14 +5,36 @@ package android.stalwartgroup.residentguardo.Pojo;
  */
 
 public class User {
-    String user_id,user_name,user_email_id,user_mobile,user_photo;
+    String user_id,user_name,user_email_id,user_mobile,user_photo,user_aprtment,user_flatname;
+    public User(){
 
-    public User(String user_id, String user_name, String user_email_id, String user_mobile, String user_photo) {
+    }
+
+    public User(String user_id, String user_name, String user_email_id, String user_mobile, String user_photo,
+                String user_aprtment,String user_flatname) {
         this.user_id=user_id;
         this.user_name=user_name;
         this.user_email_id=user_email_id;
         this.user_mobile=user_mobile;
         this.user_photo=user_photo;
+        this.user_aprtment=user_aprtment;
+        this.user_flatname=user_flatname;
+    }
+
+    public String getUser_aprtment() {
+        return user_aprtment;
+    }
+
+    public void setUser_aprtment(String user_aprtment) {
+        this.user_aprtment = user_aprtment;
+    }
+
+    public String getUser_flatname() {
+        return user_flatname;
+    }
+
+    public void setUser_flatname(String user_flatname) {
+        this.user_flatname = user_flatname;
     }
 
     public String getUser_id() {

@@ -1,6 +1,5 @@
 package android.stalwartgroup.residentguardo.Activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -35,7 +34,7 @@ import java.util.ArrayList;
 public class SplasSceen extends AppCompatActivity {
 
     private static final int SPLASH_INTERVAL_TIME= 3000;
-    String user_id,user_type,unit_detail_id;
+    String user_id,user_type,register_id,fcm_id;
     RelativeLayout linn;
     ArrayList<User> userArrayList;
 
@@ -49,11 +48,12 @@ public class SplasSceen extends AppCompatActivity {
        // CheckApprove();
 
         user_id = SplasSceen.this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.REGISTER_USER_ID, null);
-        unit_detail_id = SplasSceen.this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).
-                getString(Constants.REGISTER_LOCATIONDETAIL_ID, null);
+        fcm_id = SplasSceen.this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.FCM_ID, null);
+        register_id = SplasSceen.this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).
+                getString(Constants.REGISTER_ID, null);
 
 
-        if(unit_detail_id==null || unit_detail_id.trim().length()<0){
+        if(register_id==null || register_id.trim().length()<0){
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -99,7 +99,7 @@ public class SplasSceen extends AppCompatActivity {
             Checkin_user_approve checkin = new Checkin_user_approve();
 
 
-            checkin.execute(unit_detail_id);
+            checkin.execute(register_id);
         } else {
             showsnackbar("No Internet");
         }
@@ -114,7 +114,7 @@ public class SplasSceen extends AppCompatActivity {
     private class Checkin_user_approve extends AsyncTask<String, Void, Void> {
 
         private static final String TAG = "SynchMobnum";
-        private ProgressDialog progressDialog = null;
+       // private ProgressDialog progressDialog = null;
         int server_status;
         String user_email_id, user_mobile,user_id, user_name,IS_ENABLE,user_flatname,user_aprtment;
         String server_message;
@@ -124,9 +124,9 @@ public class SplasSceen extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            if (progressDialog == null) {
+            /*if (progressDialog == null) {
                 progressDialog = ProgressDialog.show(SplasSceen.this, "Loading", "Please wait...");
-            }
+            }*/
             // onPreExecuteTask();
         }
 
@@ -134,7 +134,7 @@ public class SplasSceen extends AppCompatActivity {
         protected Void doInBackground(String... params) {
 
             try {
-                String unitdetail_id = params[0];
+                String register_id = params[0];
                 InputStream in = null;
                 int resCode = -1;
 
@@ -151,7 +151,7 @@ public class SplasSceen extends AppCompatActivity {
                 conn.setRequestMethod("POST");
 
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("locationDetail_id", unitdetail_id);
+                        .appendQueryParameter("preregistration_id", register_id);
 
                 //.appendQueryParameter("deviceid", deviceid);
                 String query = builder.build().getEncodedQuery();
@@ -184,21 +184,18 @@ public class SplasSceen extends AppCompatActivity {
                 /**
                  * {
                  "User": {
-                 "id": "43",
-                 "official_id": "",
-                 "name": "test56",
-                 "email_id": "rt@gmail.com",
-                 "mobile": "9460932771",
-                 "password": "5f4dcc3b5aa765d61d8327deb882cf99",
-                 "photo": "photo1506061446.jpg",
-                 "address": "",
-                 "user_type": "Residence",
-                 "is_enable": "1",
-                 "status": "1",
-                 "fb_reg_key": null,
-                 "created": "2017-09-22 05:58:08",
-                 "modified": "2017-09-22 09:33:52"
+                 "id": "49",
+                 "name": "Rasmita",
+                 "email_id": "rasmi@gmail.com",
+                 "mobile": "8594938936",
+                 "photo": "http://stalwartsecurity.in/admin/files/photo/",
+                 "address": null,
+                 "user_type": "Owner",
+                 "firebase_reg_id": "5",
+                 "location_name": "Brigade Metropolis",
+                 "flat_name": "L-1906"
                  },
+                 "is_approved": 1,
                  "status": 1,
                  "message": "Approved User"
                  }
@@ -220,8 +217,10 @@ public class SplasSceen extends AppCompatActivity {
                             user_photo = jobj.optString("photo");
                              IS_ENABLE = jobj.optString("is_enable");
                             String login_status = jobj.optString("status");
-                            user_type = jobj.optString("user_type");
-                            User ulist = new User(user_id, user_name, user_email_id, user_mobile, user_photo);
+                             login_status = jobj.optString("status");
+                             user_aprtment = jobj.optString("location_name");
+                            user_flatname = jobj.optString("flat_name");
+                            User ulist = new User(user_id, user_name, user_email_id, user_mobile, user_photo,user_aprtment,user_flatname);
                             userArrayList.add(ulist);
 
 
@@ -261,7 +260,7 @@ public class SplasSceen extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
-            progressDialog.cancel();
+            //progressDialog.cancel();
             if (server_status == 1){
                 showsnackbar(server_message);
                 SharedPreferences sharedPreferences = SplasSceen.this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
@@ -274,6 +273,7 @@ public class SplasSceen extends AppCompatActivity {
                 editor.putString(Constants.USER_TYPE, user_type);
                 editor.putString(Constants.USER_FLAT_NAME, user_flatname);
                 editor.putString(Constants.USER_APARTMENT_NAME, user_aprtment);
+                editor.commit();
                 Intent i=new Intent(SplasSceen.this,HomeActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

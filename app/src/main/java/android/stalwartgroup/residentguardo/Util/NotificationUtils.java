@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,7 +17,6 @@ import android.stalwartgroup.residentguardo.R;
 import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class NotificationUtils {
 
 
         // notification icon
-        final int icon = R.mipmap.ic_launcher;
+        final int icon = R.drawable.logo_without_name;
 
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         final PendingIntent resultPendingIntent =
@@ -63,7 +63,9 @@ public class NotificationUtils {
         final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                 mContext);
 
-       final Uri defaultSoundUri= Uri.parse("android.resource://"+mContext.getPackageName()+"/"+R.raw.notification_guardo);
+        Uri defaultSoundUri= Uri.parse("android.resource://"+mContext.getPackageName()+"/"+R.raw.notification_guardo);
+        Ringtone r = RingtoneManager.getRingtone(mContext, defaultSoundUri);
+        r.play();
 
         if (!TextUtils.isEmpty(imageUrl)) {
 
@@ -98,14 +100,13 @@ public class NotificationUtils {
                 .setSound(defaultSoundUri)
                 .setStyle(inboxStyle)
                 .setWhen(getTimeMilliSec(timeStamp))
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.logo_without_name)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                 .setContentText(message)
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification);
-        //notificationManager.notify(Config.NOTIFICATION_ID, notification);
+        notificationManager.notify(Config.NOTIFICATION_ID, notification);
     }
 
     private void showBigNotification(Bitmap bitmap, NotificationCompat.Builder mBuilder, int icon, String title, String message, String timeStamp, PendingIntent resultPendingIntent, Uri defaultSoundUri) {
@@ -121,16 +122,14 @@ public class NotificationUtils {
                 .setSound(defaultSoundUri)
                 .setStyle(bigPictureStyle)
                 .setWhen(getTimeMilliSec(timeStamp))
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.logo_without_name)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                 .setContentText(message)
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification);
-        //notificationManager.notify(Config.NOTIFICATION_ID_BIG_IMAGE, notification);
+        notificationManager.notify(Config.NOTIFICATION_ID_BIG_IMAGE, notification);
     }
-
 
     /**
      * Downloading push notification image before displaying it in
@@ -153,14 +152,11 @@ public class NotificationUtils {
 
     // Playing notification sound
     public void playNotificationSound() {
-        try {
-            Uri defaultSoundUri = Uri.parse("android.resource://"+mContext.getPackageName()+"/"+R.raw.notification_guardo);
-            Ringtone r = RingtoneManager.getRingtone(mContext, defaultSoundUri);
-            r.play();
-            Log.e("Notofication","sound played");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+            Uri defaultSoundUri= Uri.parse("android.resource://"+mContext.getPackageName()+"/"+R.raw.notification_guardo);
+        Ringtone r = RingtoneManager.getRingtone(mContext, defaultSoundUri);
+        r.play();
+
     }
 
     /**
@@ -176,11 +172,24 @@ public class NotificationUtils {
                     for (String activeProcess : processInfo.pkgList) {
                         if (activeProcess.equals(context.getPackageName())) {
                             isInBackground = false;
+                            // play notification sound
+                            NotificationUtils notificationUtils = new NotificationUtils(context);
+                            notificationUtils.playNotificationSound();
                         }
                     }
                 }
             }
+        } else {
+            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+            ComponentName componentInfo = taskInfo.get(0).topActivity;
+            if (componentInfo.getPackageName().equals(context.getPackageName())) {
+                isInBackground = false;
+                // play notification sound
+                NotificationUtils notificationUtils = new NotificationUtils(context);
+                notificationUtils.playNotificationSound();
+            }
         }
+
         return isInBackground;
     }
 

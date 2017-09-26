@@ -3,6 +3,7 @@ package android.stalwartgroup.residentguardo.Firebase;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.stalwartgroup.residentguardo.Util.Config;
+import android.stalwartgroup.residentguardo.Util.Constants;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -39,9 +40,9 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
 
     private void storeRegIdInPref(String token) {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("regId", token);
+        SharedPreferences sharedPreferences = MyFirebaseInstanceIDService.this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.FCM_ID, token);
         editor.commit();
     }
 }

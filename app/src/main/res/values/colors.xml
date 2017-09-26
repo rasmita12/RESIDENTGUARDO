@@ -7,6 +7,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="LoginButtoncolor">#00c0af</color>
     <color name="RegisterButtoncolor">#00aae7</color>
+    <color name="blue">#00aae7</color>
     <color name="White">#ffffff</color>
     <color name="btn_orange">#f96e3a</color>
     <color name="background">#cecece</color>
