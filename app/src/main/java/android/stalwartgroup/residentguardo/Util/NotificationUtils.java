@@ -19,10 +19,12 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.Patterns;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,6 +35,8 @@ public class NotificationUtils {
     private static String TAG = NotificationUtils.class.getSimpleName();
 
     private Context mContext;
+   // Bitmap bitmap;
+
 
     public NotificationUtils(Context mContext) {
         this.mContext = mContext;
@@ -72,7 +76,6 @@ public class NotificationUtils {
             if (imageUrl != null && imageUrl.length() > 4 && Patterns.WEB_URL.matcher(imageUrl).matches()) {
 
                 Bitmap bitmap = getBitmapFromURL(imageUrl);
-
                 if (bitmap != null) {
                     showBigNotification(bitmap, mBuilder, icon, title, message, timeStamp, resultPendingIntent, defaultSoundUri);
                 } else {
@@ -124,6 +127,7 @@ public class NotificationUtils {
                 .setWhen(getTimeMilliSec(timeStamp))
                 .setSmallIcon(R.drawable.logo_without_name)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
+                //.setLargeIcon()
                 .setContentText(message)
                 .build();
 
@@ -136,18 +140,27 @@ public class NotificationUtils {
      * the notification tray
      */
     public Bitmap getBitmapFromURL(String strURL) {
+        Bitmap bmp = null;
+        InputStream is = null;
+        BufferedInputStream bis = null;
+
         try {
             URL url = new URL(strURL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
+
+            URLConnection conn = url.openConnection();
+            conn.connect();
+            is = conn.getInputStream();
+            bis = new BufferedInputStream(is);
+            bmp = BitmapFactory.decodeStream(bis);
+        } catch (MalformedURLException e) {
+            System.out.println("Bad ad URL");
             e.printStackTrace();
-            return null;
+        } catch (IOException e) {
+            System.out.println("Could not get remote ad image");
+            e.printStackTrace();
         }
+        return bmp;
+
     }
 
     // Playing notification sound

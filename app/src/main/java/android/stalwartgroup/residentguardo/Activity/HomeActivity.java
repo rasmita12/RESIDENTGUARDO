@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.stalwartgroup.residentguardo.Fragment.HomeFragment;
+import android.stalwartgroup.residentguardo.Fragment.ResidentPreApprove;
 import android.stalwartgroup.residentguardo.Fragment.ResidentProfile;
 import android.stalwartgroup.residentguardo.R;
 import android.support.design.widget.NavigationView;
@@ -34,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG_HOME = "home";
     private static final String TAG_PROFILE = "profile";
     public static String CURRENT_TAG = TAG_HOME;
+    public static String TAG_PREAPPROVE = "preapprove";
     public static int navItemIndex = 0;
     public static int item_id;
     private Handler mHandler;
@@ -160,6 +162,11 @@ public class HomeActivity extends AppCompatActivity {
                 ResidentProfile profile = new ResidentProfile();
                 toolbar.setTitle("Profile");
                 return profile;
+            case R.id.resident_preapprove:
+                // Entry for visitors
+                ResidentPreApprove preapprove = new ResidentPreApprove();
+                toolbar.setTitle("PreApprove");
+                return preapprove;
 
             case R.id.resident_logout:
 
@@ -192,6 +199,10 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.resident_profile:
                         item_id = R.id.resident_profile;
                         CURRENT_TAG = TAG_PROFILE;
+                        break;
+                    case R.id.resident_preapprove:
+                        item_id = R.id.resident_preapprove;
+                        CURRENT_TAG = TAG_PREAPPROVE;
                         break;
 
                     case R.id.resident_logout:

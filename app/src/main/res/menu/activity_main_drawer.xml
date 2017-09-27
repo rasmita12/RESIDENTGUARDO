@@ -15,6 +15,9 @@
             <item
                 android:id="@+id/resident_logout"
                 android:title="Logout " />
+            <item
+                android:id="@+id/resident_preapprove"
+                android:title="PreApprove " />
             <!--<item
                 android:id="@+id/exit_visitors"
                 android:title="Exit " />
