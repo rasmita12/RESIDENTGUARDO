@@ -35,12 +35,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/resident_profileimg"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:text="Mr. Rakesh Verma"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="15dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
             android:id="@+id/tv_profileName"/>
         <TextView
             android:layout_width="wrap_content"
@@ -48,46 +48,124 @@
             android:layout_below="@id/tv_profileName"
             android:layout_toRightOf="@id/resident_profileimg"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
             android:id="@+id/tv_address"
             android:text="F101, Vaswani Reverse"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/resident_profileimg"
+            >
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_below="@id/resident_profileimg"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content">
             <EditText
-                android:id="@+id/user_email"
-                android:layout_width="200dp"
+                android:id="@+id/visitor_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="visitor name"/>
+                android:hint="visitor name"
+                android:backgroundTint="@color/colorPrimary"/>
+            <ImageView
+                android:id="@+id/add_phone_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="-40dp"
+                android:background="@mipmap/ic_contacts_black_24dp"
+                android:backgroundTint="@color/btn_orange"/>
             <EditText
-                android:id="@+id/user_phone"
-                android:layout_width="200dp"
+                android:id="@+id/visitor_phone"
+                android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:hint="visitor phone number"/>
+                android:hint="visitor phone number"
+                android:backgroundTint="@color/colorPrimary"/>
             <EditText
-                android:id="@+id/user_phone1"
-                android:layout_width="200dp"
+                android:id="@+id/visitor_arrival_date"
+                android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:hint="coming from"/>
+                android:hint="visitor arrival date"
+                android:backgroundTint="@color/colorPrimary"/>
             <EditText
-                android:id="@+id/user_vehicle"
-                android:layout_width="200dp"
+                android:id="@+id/visitor_leaving_date"
+                android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:hint="visitor vehicle number"/>
-            <EditText
-                android:id="@+id/numberof_visitor"
-                android:layout_width="200dp"
+                android:hint="visitor leaving date"
+                android:backgroundTint="@color/colorPrimary"/>
+
+
+            <TextView
+                android:id="@+id/visitor_expctd_guest"
+                android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:hint="number of visit"/>
+                android:text="expected number of guest"
+                android:textColor="@color/black"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/adult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adult"/>
+                <Spinner
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="-20dp"
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/array_name"/>
+                <TextView
+                    android:id="@+id/child"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Child"
+                    android:layout_marginLeft="140dp"
+                    android:layout_marginTop="-20dp"/>
+                <Spinner
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="190dp"
+                    android:layout_marginTop="-20dp"
+                    android:entries="@array/array_name1">
+
+                </Spinner>
+            </LinearLayout>
+            <EditText
+                android:id="@+id/visitor_comingfrom"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:hint="coming from"
+                android:backgroundTint="@color/colorPrimary"/>
+            <EditText
+                android:id="@+id/visitor_vehicle"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:hint="visitor vehicle number"
+                android:backgroundTint="@color/colorPrimary"/>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Generate PassCode"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                android:background="@drawable/button_login_btn"/>
         </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -95,7 +173,8 @@
             android:layout_marginBottom="20dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
             <Button
                 android:layout_width="100dp"
                 android:text="edit"

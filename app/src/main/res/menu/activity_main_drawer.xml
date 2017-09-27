@@ -1,15 +1,41 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+<!--
     <group android:checkableBehavior="single">
+--><item android:title="General">
+        <menu>
         <item
             android:id="@+id/nav_home"
+            android:icon="@mipmap/ic_camera_alt_black_24dp"
             android:title="Home" />
+        <item
+            android:id="@+id/resident_preapprove"
+            android:icon="@mipmap/ic_camera_alt_black_24dp"
+            android:title="PreApproved Guest " />
+        <item
+            android:id="@+id/resident_profile"
+            android:icon="@mipmap/ic_camera_alt_black_24dp"
+            android:title="Profile " />
+        <item
+            android:id="@+id/resident_ser"
+            android:icon="@mipmap/ic_camera_alt_black_24dp"
+            android:title="Service Provider " />
+        <item
+            android:id="@+id/resident_logout"
+            android:icon="@mipmap/ic_camera_alt_black_24dp"
+            android:title="Logout " />
 
+        </menu>
+    </item>
+
+<!--
     </group>
+-->
+    </menu>
 
-    <item android:title="SETTINGS">
+   <!-- <item android:title="SETTINGS">
         <menu>
-            <item
+            &lt;!&ndash;<item
                 android:id="@+id/resident_profile"
                 android:title="Profile " />
             <item
@@ -17,13 +43,12 @@
                 android:title="Logout " />
             <item
                 android:id="@+id/resident_preapprove"
-                android:title="PreApprove " />
-            <!--<item
+                android:title="PreApprove " />&ndash;&gt;
+            &lt;!&ndash;<item
                 android:id="@+id/exit_visitors"
                 android:title="Exit " />
             <item
                 android:id="@+id/exitD_visitors"
-                android:title="List " />-->
+                android:title="List " />&ndash;&gt;
         </menu>
-    </item>
-    </menu>
+    </item>&ndash;&gt;-->

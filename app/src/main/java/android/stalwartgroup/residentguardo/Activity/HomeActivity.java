@@ -2,12 +2,15 @@ package android.stalwartgroup.residentguardo.Activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.stalwartgroup.residentguardo.Fragment.HomeFragment;
 import android.stalwartgroup.residentguardo.Fragment.ResidentPreApprove;
 import android.stalwartgroup.residentguardo.Fragment.ResidentProfile;
 import android.stalwartgroup.residentguardo.R;
+import android.stalwartgroup.residentguardo.Util.Constants;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -165,7 +168,7 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.resident_preapprove:
                 // Entry for visitors
                 ResidentPreApprove preapprove = new ResidentPreApprove();
-                toolbar.setTitle("PreApprove");
+                toolbar.setTitle("PreApproved Guest");
                 return preapprove;
 
             case R.id.resident_logout:
@@ -178,6 +181,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void logout() {
+        SharedPreferences sharedPreferences = HomeActivity.this.getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0); // 0 - for private mode
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+
+        Intent intent=new Intent(HomeActivity.this,Register_Login_Activity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
     }
 
 
