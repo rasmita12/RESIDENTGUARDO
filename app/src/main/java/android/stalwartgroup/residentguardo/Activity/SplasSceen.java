@@ -199,6 +199,12 @@ public class SplasSceen extends AppCompatActivity {
                  "status": 1,
                  "message": "Approved User"
                  }
+                 // for reject
+                 {
+                 "is_approved": 3,
+                 "status": 2,
+                 "message": "Rejeted by the admin"
+                 }
                  * */
 
 
@@ -215,10 +221,10 @@ public class SplasSceen extends AppCompatActivity {
                             user_email_id = jobj.optString("email_id");
                             user_mobile = jobj.optString("mobile");
                             user_photo = jobj.optString("photo");
-                             IS_ENABLE = jobj.optString("is_enable");
+                            IS_ENABLE = jobj.optString("is_enable");
                             String login_status = jobj.optString("status");
-                             login_status = jobj.optString("status");
-                             user_aprtment = jobj.optString("location_name");
+                            login_status = jobj.optString("status");
+                            user_aprtment = jobj.optString("location_name");
                             user_flatname = jobj.optString("flat_name");
                             User ulist = new User(user_id, user_name, user_email_id, user_mobile, user_photo,user_aprtment,user_flatname);
                             userArrayList.add(ulist);
@@ -282,12 +288,21 @@ public class SplasSceen extends AppCompatActivity {
             }
             else if(server_status==2){
                 showsnackbar(server_message);
+                Intent i=new Intent(SplasSceen.this,RejectActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(i);
+            }
+            else if(server_status==3){
+                showsnackbar(server_message);
                 Intent i=new Intent(SplasSceen.this,PendingActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(i);
             }
+
             else {
                 showsnackbar(server_message);
 

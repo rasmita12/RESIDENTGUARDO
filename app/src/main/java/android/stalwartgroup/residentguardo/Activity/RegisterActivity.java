@@ -182,30 +182,39 @@ public class RegisterActivity extends AppCompatActivity implements OTPListener {
     }
 
     private void validatefield() {
-        if (residenttype.isChecked()) {
-            resident_data = residenttype.getText().toString();
-        } else if (tenattype.isChecked()) {
-            resident_data = tenattype.getText().toString();
-        }
-        if(user_name.getText().toString().trim().length()<0){
-            Toast.makeText(RegisterActivity.this,"Enter Username",Toast.LENGTH_SHORT).show();
 
+        if (residenttype.isChecked() || tenattype.isChecked()) {
+            Log.d("QAOD", "Gender is Selected");
+        } else {
+            Toast.makeText(getApplicationContext(), "Please select Gender", Toast.LENGTH_SHORT).show();
         }
-        else if(apart_name.getText().toString().trim().length()<0){
+
+         if(phno_number.getText().toString().trim().length()<=0 && phno_number.getText().toString().trim().length()<=10){
+            Toast.makeText(RegisterActivity.this,"Enter Valid Mobile Number",Toast.LENGTH_SHORT).show();
+        }
+       else if(user_name.getText().toString().trim().length()<=0){
+            Toast.makeText(RegisterActivity.this,"Enter Fullname",Toast.LENGTH_SHORT).show();
+        }
+        else if(email.getText().toString().trim().length()<=0) {
+             Toast.makeText(RegisterActivity.this,"Enter Email Address",Toast.LENGTH_SHORT).show();
+         }
+
+        else if(apart_name.getText().toString().trim().length()<=0){
             Toast.makeText(RegisterActivity.this,"Enter Your Apartment name",Toast.LENGTH_SHORT).show();
         }
 
-        else if(flat_name.getText().toString().trim().length()<0){
+        else if(flat_name.getText().toString().trim().length()<=0){
             Toast.makeText(RegisterActivity.this,"Enter Your Flat name",Toast.LENGTH_SHORT).show();
         }
-       else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
-            Toast.makeText(RegisterActivity.this,"Invalid Email Address",Toast.LENGTH_SHORT).show();
-        }
-        else if(phno_number.getText().toString().trim().length()<0){
-            Toast.makeText(RegisterActivity.this,"Enter Mobile Number",Toast.LENGTH_SHORT).show();
-        }
         else{
-            CheckinServer();
+            if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+                Toast.makeText(RegisterActivity.this,"Invalid Email Address",Toast.LENGTH_SHORT).show();
+
+            }
+            else{
+                CheckinServer();
+
+            }
         }
     }
 

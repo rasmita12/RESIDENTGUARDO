@@ -68,7 +68,7 @@
                 android:id="@+id/visitor_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="visitor name"
+                android:hint="Visitor name"
                 android:backgroundTint="@color/colorPrimary"/>
             <ImageView
                 android:id="@+id/add_phone_name"
@@ -83,21 +83,21 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:hint="visitor phone number"
+                android:hint="Visitor phone number"
                 android:backgroundTint="@color/colorPrimary"/>
             <EditText
                 android:id="@+id/visitor_arrival_date"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:hint="visitor arrival date"
+                android:hint="Visitor arrival date"
                 android:backgroundTint="@color/colorPrimary"/>
             <EditText
                 android:id="@+id/visitor_leaving_date"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:hint="visitor leaving date"
+                android:hint="Visitor leaving date"
                 android:backgroundTint="@color/colorPrimary"/>
 
 
@@ -106,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:text="expected number of guest"
+                android:text="Expected number of guest"
                 android:textColor="@color/black"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,11 +117,12 @@
                     android:id="@+id/adult"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Adult"/>
+                    android:text="Adult"
+                    android:layout_marginLeft="20dp"/>
                 <Spinner
-                    android:layout_width="80dp"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="60dp"
                     android:layout_marginTop="-20dp"
                     android:drawSelectorOnTop="true"
                     android:entries="@array/array_name"/>
@@ -130,12 +131,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Child"
-                    android:layout_marginLeft="140dp"
+                    android:layout_marginLeft="135dp"
                     android:layout_marginTop="-20dp"/>
                 <Spinner
-                    android:layout_width="80dp"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="190dp"
+                    android:layout_marginLeft="180dp"
                     android:layout_marginTop="-20dp"
                     android:entries="@array/array_name1">
 
@@ -146,14 +147,14 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:hint="coming from"
+                android:hint="Coming from"
                 android:backgroundTint="@color/colorPrimary"/>
             <EditText
                 android:id="@+id/visitor_vehicle"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:hint="visitor vehicle number"
+                android:hint="Visitor vehicle number"
                 android:backgroundTint="@color/colorPrimary"/>
 
 

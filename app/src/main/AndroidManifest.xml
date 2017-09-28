@@ -44,6 +44,7 @@
         <activity android:name=".Activity.FlatListActivity"></activity>
         <activity android:name=".Activity.PendingActivity"></activity>
         <activity android:name=".Activity.SendOtpActivity"></activity>
+        <activity android:name=".Activity.RejectActivity"></activity>
 
         <receiver android:name=".Activity.OtpReader">
             <intent-filter>

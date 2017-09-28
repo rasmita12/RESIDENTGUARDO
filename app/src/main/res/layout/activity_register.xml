@@ -26,9 +26,10 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/relative_register"
-            android:layout_marginTop="50dp"/>
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="-20dp"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -48,7 +49,7 @@
             <RelativeLayout
                 android:id="@+id/rel_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/profile_image"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
@@ -67,7 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/et_username"
-                    android:hint="Name"
+                    android:hint="Fullname"
                     android:singleLine="true"
                     android:inputType="textPersonName"
                     android:layout_below="@+id/et_mobile"
@@ -125,21 +126,22 @@
                     android:layout_below="@+id/et_aprt_name"
                     android:layout_marginTop="10dp"
                     android:hint="Flat Name" />
-
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp"
+                    android:id="@+id/register_submit"
+                    android:text="REGISTER"
+                    android:layout_below="@+id/et_flat_name"
+                    android:textColor="@color/White"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/LoginButtoncolor"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="10dp" />
             </RelativeLayout>
             </ScrollView>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
-                android:id="@+id/register_submit"
-                android:text="REGISTER"
-                android:textColor="@color/White"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorPrimary"
-                android:layout_marginBottom="30dp"/>
-        </RelativeLayout>
 
+</RelativeLayout>
 </RelativeLayout>
