@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/linn">
 
 
     <RelativeLayout
@@ -26,6 +27,7 @@
             android:gravity="center"
             android:layout_marginLeft="-20dp">
             <ImageView
+                android:id="@+id/approve_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/black"
@@ -84,18 +86,23 @@
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:hint="Visitor phone number"
+                android:inputType="number"
                 android:backgroundTint="@color/colorPrimary"/>
             <EditText
                 android:id="@+id/visitor_arrival_date"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
+                android:focusable="false"
+                android:editable="false"
                 android:hint="Visitor arrival date"
                 android:backgroundTint="@color/colorPrimary"/>
             <EditText
                 android:id="@+id/visitor_leaving_date"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
+                android:focusable="false"
+                android:editable="false"
                 android:layout_height="wrap_content"
                 android:hint="Visitor leaving date"
                 android:backgroundTint="@color/colorPrimary"/>
@@ -120,6 +127,7 @@
                     android:text="Adult"
                     android:layout_marginLeft="20dp"/>
                 <Spinner
+                    android:id="@+id/adult_spin"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="60dp"
@@ -134,6 +142,7 @@
                     android:layout_marginLeft="135dp"
                     android:layout_marginTop="-20dp"/>
                 <Spinner
+                    android:id="@+id/child_spin"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="180dp"
@@ -159,6 +168,7 @@
 
 
             <Button
+                android:id="@+id/generate_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Generate PassCode"

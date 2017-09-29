@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/linn">
 
 
     <RelativeLayout
@@ -26,12 +27,13 @@
             android:gravity="center"
             android:layout_marginLeft="-20dp">
             <ImageView
+                android:id="@+id/profile_img_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/black"
                 android:background="@mipmap/ic_mode_edit_white_24dp" />
         </RelativeLayout>
-        <TextView
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/resident_profileimg"
@@ -156,12 +158,14 @@
             android:layout_centerHorizontal="true"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/edit_button"
                 android:layout_width="100dp"
                 android:text="edit"
                 android:textColor="@color/black"
                 android:background="@drawable/layout_background"
                 android:layout_height="50dp" />
             <Button
+                android:id="@+id/save_button"
                 android:layout_width="100dp"
                 android:text="save"
                 android:layout_marginLeft="30dp"
