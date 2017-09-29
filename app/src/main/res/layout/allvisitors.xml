@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rel_vistadapter"
     android:background="@color/background">
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/card1"
+        app:cardBackgroundColor="@color/light_colorPrimary"
         android:layout_marginTop="0dp"
         android:layout_marginRight="0dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/time"
+                android:layout_marginTop="5dp"
+
+                android:text="10:40 PM"/>
             <ImageView
                 android:layout_width="60dp"
                 android:padding="5dp"
+                android:visibility="gone"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="20dp"
                 android:scaleType="fitXY"
@@ -25,19 +36,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mr. Manoj Mishra"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@+id/visitorsPic"
+                android:layout_marginLeft="10dp"
+                android:textSize="15dp"
+                android:maxLength="50"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/time"
                 android:id="@+id/visitors_name"
-                android:textStyle="bold"
-                android:textColor="@color/LoginButtoncolor"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/visitors_name"
                 android:layout_marginTop="0dp"
+                android:visibility="gone"
                 android:layout_marginLeft="5dp"
                 android:id="@+id/tv_phone_comingfrm"
                 android:layout_toRightOf="@id/visitorsPic"
@@ -46,29 +58,32 @@
 
             <Button
                 android:id="@+id/approve"
-                android:layout_width="70dp"
-                android:layout_height="20dp"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
                 android:layout_below="@+id/tv_phone_comingfrm"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="30dp"
                 android:text="APPROVE"
+                android:textColor="@color/White"
                 android:gravity="center"
-                android:layout_toRightOf="@id/visitorsPic"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/time"
                 android:layout_marginBottom="0dp"
                 android:textStyle="bold"
-                android:background="@color/RegisterButtoncolor"/>
+                android:background="@drawable/approvebutton"/>
             <Button
                 android:id="@+id/reject"
-                android:layout_width="70dp"
-                android:layout_height="20dp"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
                 android:layout_toRightOf="@+id/approve"
                 android:layout_below="@+id/tv_phone_comingfrm"
                 android:text="REJECT"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
-                android:background="@color/btn_orange"/>
+                android:textColor="@color/White"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/rejectbutton"/>
 
         </RelativeLayout>
 

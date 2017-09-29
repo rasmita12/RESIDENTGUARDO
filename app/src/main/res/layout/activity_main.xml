@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/light_colorPrimary">
     <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="310dp"
-       android:layout_marginTop="10dp"
-       android:id="@+id/relative_fodetail">
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:background="@color/light_colorPrimary"
+        android:layout_marginTop="10dp"
+        android:id="@+id/relative_fodetail">
 
-       <ListView
-           android:layout_width="wrap_content"
-           android:layout_height="match_parent"
-           android:divider="@null"
-           android:background="@color/White"
-           android:id="@+id/list_home">
-       </ListView>
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:background="@color/light_colorPrimary"
+            android:id="@+id/list_home">
+        </ListView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -23,11 +25,11 @@
             android:text="Visitor Not Found"
             android:layout_centerInParent="true"
             android:visibility="gone"/>
-   </RelativeLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:background="@color/White"
         android:layout_alignParentBottom="true">
     </RelativeLayout>
@@ -38,126 +40,126 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="-30dp"
+        android:layout_marginBottom="-10dp"
         android:layout_below="@+id/relative_fodetail"
         android:background="@drawable/backgroundborder">
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:id="@+id/relative_design"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:id="@+id/fo_checkin"
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:id="@+id/relative_design"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="70dp">
-            <ImageView
-                android:id="@+id/unit_img1"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/cerclelayout"
-                android:src="@mipmap/ic_camera_black_24dp"/>
-            <TextView
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/fo_checkin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VISIT"
-                android:layout_below="@+id/unit_img1"
-                android:textSize="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/colorPrimary"/>
-        </RelativeLayout>
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="70dp">
+                <ImageView
+                    android:id="@+id/unit_img1"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/cerclelayout"
+                    android:src="@mipmap/ic_camera_black_24dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VISIT"
+                    android:layout_below="@+id/unit_img1"
+                    android:textSize="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/colorPrimary"/>
+            </RelativeLayout>
 
 
-        <RelativeLayout
-            android:id="@+id/fo_incident"
-            android:layout_toRightOf="@+id/fo_checkin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp">
-            <ImageView
-                android:id="@+id/unit_img2"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/cerclelayout"
-                android:src="@mipmap/ic_camera_black_24dp"/>
-            <TextView
+            <RelativeLayout
+                android:id="@+id/fo_incident"
+                android:layout_toRightOf="@+id/fo_checkin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VISIT"
-                android:layout_below="@+id/unit_img2"
-                android:textSize="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/colorPrimary"/>
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lin_design"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/relative_design">
-
-        <RelativeLayout
-            android:id="@+id/fo_incident1"
-            android:layout_toRightOf="@+id/fo_checkin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="70dp">
-            <ImageView
-                android:id="@+id/unit_img21"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/cerclelayout"
-                android:src="@mipmap/ic_camera_black_24dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="VISIT"
-                android:layout_below="@+id/unit_img21"
-                android:textSize="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/colorPrimary"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/fo_incident3"
-            android:layout_toRightOf="@+id/fo_checkin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp">
-            <ImageView
-                android:id="@+id/unit_img23"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/cerclelayout"
-                android:src="@mipmap/ic_camera_black_24dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="VISIT"
-                android:layout_below="@+id/unit_img23"
-                android:textSize="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/colorPrimary"/>
-        </RelativeLayout>
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp">
+                <ImageView
+                    android:id="@+id/unit_img2"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/cerclelayout"
+                    android:src="@mipmap/ic_camera_black_24dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VISIT"
+                    android:layout_below="@+id/unit_img2"
+                    android:textSize="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/colorPrimary"/>
+            </RelativeLayout>
         </LinearLayout>
-        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/lin_design"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/relative_design">
+
+            <RelativeLayout
+                android:id="@+id/fo_incident1"
+                android:layout_toRightOf="@+id/fo_checkin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="70dp">
+                <ImageView
+                    android:id="@+id/unit_img21"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/cerclelayout"
+                    android:src="@mipmap/ic_camera_black_24dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VISIT"
+                    android:layout_below="@+id/unit_img21"
+                    android:textSize="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/colorPrimary"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/fo_incident3"
+                android:layout_toRightOf="@+id/fo_checkin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp">
+                <ImageView
+                    android:id="@+id/unit_img23"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/cerclelayout"
+                    android:src="@mipmap/ic_camera_black_24dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VISIT"
+                    android:layout_below="@+id/unit_img23"
+                    android:textSize="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/colorPrimary"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 
 

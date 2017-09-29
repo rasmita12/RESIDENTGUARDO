@@ -87,6 +87,8 @@ public class VisitorsAdapter extends BaseAdapter {
             holder.visitorsPic=(ImageView) convertView.findViewById(R.id.visitorsPic);
             holder.approve=(Button)convertView.findViewById(R.id.approve);
             holder.reject=(Button)convertView.findViewById(R.id.reject);
+            holder.approve.setVisibility(View.GONE);
+            holder.reject.setVisibility(View.GONE);
             convertView.setTag(holder);
         }
         else{
@@ -102,7 +104,7 @@ public class VisitorsAdapter extends BaseAdapter {
         String comingfrom=_pos.getComing_from();
         String is_verified=_pos.getVerification();
 
-        holder.tv_name.setText(name);
+        holder.tv_name.setText(name+","+comingfrom);
         holder.tv_cmngfrom.setText(mobile+" "+","+" "+comingfrom);
         if(!_pos.getPhoto().isEmpty()) {
             Picasso.with(_context).load(_pos.getPhoto()).into(holder.visitorsPic);
@@ -291,6 +293,8 @@ public class VisitorsAdapter extends BaseAdapter {
 
             }
             else {
+                holder.approve.setVisibility(View.VISIBLE);
+                holder.reject.setVisibility(View.VISIBLE);
                 Toast.makeText(_context,server_response,Toast.LENGTH_LONG).show();
             }
 
