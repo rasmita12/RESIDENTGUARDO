@@ -16,6 +16,7 @@
             android:layout_height="180dp"
             android:id="@+id/resident_profileimg"
             android:padding="20dp"
+            android:scaleType="fitXY"
             android:background="@drawable/layout_background"
             android:src="@drawable/logo_without_name"/>
         <RelativeLayout

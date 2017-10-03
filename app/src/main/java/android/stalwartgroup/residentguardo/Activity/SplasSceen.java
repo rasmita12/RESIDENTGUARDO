@@ -116,7 +116,7 @@ public class SplasSceen extends AppCompatActivity {
         private static final String TAG = "SynchMobnum";
        // private ProgressDialog progressDialog = null;
         int server_status;
-        String user_email_id, user_mobile,user_id, user_name,IS_ENABLE,user_flatname,user_aprtment;
+        String user_email_id, user_mobile,user_id, user_name,IS_ENABLE,user_flatname,user_aprtment,user_aprtment_ID;
         String server_message;
         String user_type;
         String user_photo;
@@ -184,26 +184,21 @@ public class SplasSceen extends AppCompatActivity {
                 /**
                  * {
                  "User": {
-                 "id": "49",
-                 "name": "Rasmita",
-                 "email_id": "rasmi@gmail.com",
-                 "mobile": "8594938936",
-                 "photo": "http://stalwartsecurity.in/admin/files/photo/",
+                 "id": "4",
+                 "name": "parth",
+                 "email_id": "parth@gmail.com",
+                 "mobile": "9460932772",
+                 "photo": "",
                  "address": null,
                  "user_type": "Owner",
-                 "firebase_reg_id": "5",
-                 "location_name": "Brigade Metropolis",
-                 "flat_name": "L-1906"
+                 "firebase_reg_id": "abc7894",
+                 "location_id": "3",
+                 "location_name": "Esha Appartments",
+                 "flat_name": "A-102"
                  },
                  "is_approved": 1,
                  "status": 1,
                  "message": "Approved User"
-                 }
-                 // for reject
-                 {
-                 "is_approved": 3,
-                 "status": 2,
-                 "message": "Rejeted by the admin"
                  }
                  * */
 
@@ -224,6 +219,7 @@ public class SplasSceen extends AppCompatActivity {
                             IS_ENABLE = jobj.optString("is_enable");
                             String login_status = jobj.optString("status");
                             login_status = jobj.optString("status");
+                            user_aprtment_ID = jobj.optString("location_id");
                             user_aprtment = jobj.optString("location_name");
                             user_flatname = jobj.optString("flat_name");
                             User ulist = new User(user_id, user_name, user_email_id, user_mobile, user_photo,user_aprtment,user_flatname);
@@ -279,6 +275,7 @@ public class SplasSceen extends AppCompatActivity {
                 editor.putString(Constants.USER_TYPE, user_type);
                 editor.putString(Constants.USER_FLAT_NAME, user_flatname);
                 editor.putString(Constants.USER_APARTMENT_NAME, user_aprtment);
+                editor.putString(Constants.USER_APARTMENT_ID, user_aprtment_ID);
                 editor.commit();
                 Intent i=new Intent(SplasSceen.this,HomeActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

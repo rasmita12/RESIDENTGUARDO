@@ -1,8 +1,11 @@
 package android.stalwartgroup.residentguardo.Fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,7 +16,9 @@ import android.provider.MediaStore;
 import android.stalwartgroup.residentguardo.R;
 import android.stalwartgroup.residentguardo.Util.CheckInternet;
 import android.stalwartgroup.residentguardo.Util.Constants;
+import android.stalwartgroup.residentguardo.Util.MultipartUtility;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
@@ -31,21 +36,14 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.ConnectException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mobileapplication on 9/26/17.
@@ -56,7 +54,7 @@ public class ResidentProfile extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-    String user_name,user_email,user_mobile,user_photo,user_apartment,user_flat;
+    String user_name,user_email,user_mobile,user_photo,user_apartment,user_flat,user_apartmentID;
     String user_id;
     TextView  tv_address;
     EditText email,add_phone,phone,tv_profileName;
@@ -69,6 +67,9 @@ public class ResidentProfile extends Fragment {
     String profileImage;
     Button save_button,edit_button;
     RelativeLayout linn;
+    private static String[] STORAGE_PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+
 
 
 
@@ -102,6 +103,16 @@ public class ResidentProfile extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.resident_profile, container, false);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // here it is checking whether the permission is granted previously or not
+            if (!hasPermissions(getActivity(), STORAGE_PERMISSIONS)) {
+                //Permission is granted
+                ActivityCompat.requestPermissions(getActivity(), STORAGE_PERMISSIONS, 1);
+
+
+            }
+        }
+
         tv_profileName=(EditText)v.findViewById(R.id.tv_profileName);
         tv_address=(TextView)v.findViewById(R.id.tv_address);
         email=(EditText)v.findViewById(R.id.user_email);
@@ -112,9 +123,12 @@ public class ResidentProfile extends Fragment {
         save_button=(Button) v.findViewById(R.id.save_button);
         edit_button=(Button) v.findViewById(R.id.edit_button);
         linn=(RelativeLayout)v.findViewById(R.id.linn);
+        tv_profileName.setEnabled(false);
+        add_phone.setEnabled(false);
+        email.setEnabled(false);
+        phone.setEnabled(false);
 
         getUserdetaildata();
-
         resident_profileimg_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,8 +141,31 @@ public class ResidentProfile extends Fragment {
                 validatefields();
             }
         });
+        edit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editfield();
+            }
+        });
         return v;
     }
+    private void editfield() {
+        tv_profileName.setEnabled(true);
+        add_phone.setEnabled(true);
+        email.setEnabled(true);
+        phone.setEnabled(true);
+    }
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     private void validatefields() {
 
@@ -140,28 +177,8 @@ public class ResidentProfile extends Fragment {
             Toast.makeText(getContext(),"Enter Valid Number",Toast.LENGTH_SHORT).show();
 
         }
-        else if(add_phone.getText().toString().trim().length()<=0){
-            Toast.makeText(getContext(),"Enter Valid Number",Toast.LENGTH_SHORT).show();
-
-        }
-        
         else{
             checkinserver();
-        }
-    }
-
-    private void checkinserver() {
-        if (CheckInternet.getNetworkConnectivityStatus(getContext())) {
-            Checkin_resident checkin = new Checkin_resident();
-            String username=tv_profileName.getText().toString();
-            String emil=email.getText().toString();
-            String mobil=phone.getText().toString();
-            String addphone=add_phone.getText().toString();
-            String address=tv_address.getText().toString();
-
-            checkin.execute(username,emil,mobil,profileImage,user_id);
-        } else {
-            showsnackbar("No Internet");
         }
     }
 
@@ -215,13 +232,14 @@ public class ResidentProfile extends Fragment {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            // imPath=picUri.getPath();
-            // Bitmap photo = (Bitmap) data.getExtras().get("data");
+             //imPath=picUri.getPath();
+             //Bitmap photo = (Bitmap) data.getExtras().get("data");
             try {
-                Bitmap photo = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),picUri);
+                Bitmap photo = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),picUri);
                 picAvailable=true;
                 resident_profileimg.setImageBitmap(photo);
-                profileImage=resident_profileimg.toString();
+                profileImage=String.valueOf(imageFile);
+
 
 
             } catch (IOException e) {
@@ -238,6 +256,7 @@ public class ResidentProfile extends Fragment {
         user_mobile = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_MOBILE, null);
         user_photo = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_PHOTO, null);
         user_apartment = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_APARTMENT_NAME, null);
+        user_apartmentID = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_APARTMENT_ID, null);
         user_flat = getContext().getSharedPreferences(Constants.SHAREDPREFERENCE_KEY, 0).getString(Constants.USER_FLAT_NAME, null);
 
         tv_profileName.setText(user_name);
@@ -245,24 +264,38 @@ public class ResidentProfile extends Fragment {
         tv_address.setText(address);
         email.setText(user_email);
         phone.setText(user_mobile);
-        if(user_photo!=null) {
+        if(!user_photo.isEmpty()) {
             Picasso.with(getContext()).load(user_photo).into(resident_profileimg);
         }
         else {
             resident_profileimg.setImageResource(R.drawable.logo_without_name);
         }
     }
+    private void checkinserver() {
+        if (CheckInternet.getNetworkConnectivityStatus(getContext())) {
+            Checkin_resident checkin = new Checkin_resident();
+            String username=tv_profileName.getText().toString();
+            String emil=email.getText().toString();
+            String mobil=phone.getText().toString();
+            String addphone=add_phone.getText().toString();
+            String address=tv_address.getText().toString();
 
+            checkin.execute(username,emil,mobil,user_id,user_apartmentID,user_flat);
+        } else {
+            showsnackbar("No Internet");
+        }
+    }
     private class Checkin_resident extends AsyncTask<String, Void, Void> {
 
-        private static final String TAG = "SynchMobnum";
+        private static final String TAG = "Checkin_resident";
         private ProgressDialog progressDialog = null;
         int server_status;
         String id, otp_no, name;
         String server_message;
         String user_type;
         String photo;
-
+        String charset = "UTF-8";
+        String link = Constants.MAINURL+Constants.RESIDENT_PROFILE;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -279,79 +312,43 @@ public class ResidentProfile extends Fragment {
                 String userName = params[0];
                 String email = params[1];
                 String mobile = params[2];
-                String photo = params[3];
-                String userid = params[4];
-                InputStream in = null;
-                int resCode = -1;
-
-                String link = Constants.MAINURL+Constants.REGISTRATION;
-                URL url = new URL(link);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000);
-                conn.setConnectTimeout(15000);
-                conn.setRequestMethod("POST");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-                conn.setAllowUserInteraction(false);
-                conn.setInstanceFollowRedirects(true);
-                conn.setRequestMethod("POST");
-
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("name", userName)
-                        .appendQueryParameter("mobile", mobile)
-                        .appendQueryParameter("user_type",email)
-                        .appendQueryParameter("plot_no",photo)
-                        .appendQueryParameter("firebase_reg_id",userid);
-
-                //.appendQueryParameter("deviceid", deviceid);
-                String query = builder.build().getEncodedQuery();
-
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(query);
-                writer.flush();
-                writer.close();
-                os.close();
-
-                conn.connect();
-                resCode = conn.getResponseCode();
-                if (resCode == HttpURLConnection.HTTP_OK) {
-                    in = conn.getInputStream();
+                String userid = params[3];
+                String aprtid = params[4];
+                String flatname = params[5];
+                MultipartUtility multipart = new MultipartUtility(link, charset);
+                        multipart.addFormField("name", userName);
+                        multipart.addFormField("mobile", mobile);
+                        multipart.addFormField("email",email);
+                        multipart.addFormField("id",userid);
+                        multipart.addFormField("location_id",aprtid);
+                        multipart.addFormField("plot_no",flatname);
+                if(imageFile!=null){
+                    multipart.addFilePart("photo",imageFile );
                 }
-                if (in == null) {
-                    return null;
+                List<String> response = multipart.finish();
+                System.out.println("SERVER REPLIED:");
+                String res = "";
+                for (String line : response) {
+                    res = res + line + "\n";
                 }
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-                String response = "", data = "";
+                Log.i(TAG, res);
 
-                while ((data = reader.readLine()) != null) {
-                    response += data + "\n";
-                }
-
-                Log.i(TAG, "Response : " + response);
 
                 /**
                  * {
-                 "PreRegistration_id": "2",
-                 "mobile": "9460932771",
-                 "otp": "9723",
                  "status": 1,
-                 "message": "Inserted details but mobile number verfication is pending."
+                 "message": "Successfully updated"
                  }
                  * */
 
 
-                if (response != null && response.length() > 0) {
-                    JSONObject res = new JSONObject(response.trim());
-                    server_status = res.optInt("status");
+                if (res != null && res.length() > 0) {
+                    JSONObject ress = new JSONObject(res.trim());
+                    server_status = ress.optInt("status");
                     if (server_status == 1) {
-                        id = res.optString("PreRegistration_id");
-                        otp_no = res.optString("otp");
-                        server_message = res.optString("message");
+                        server_message = ress.optString("message");
 
                         //showsnackbar(server_message);
-
                     }
                     else {
                         server_message = "Invalid Credentials";
@@ -385,7 +382,14 @@ public class ResidentProfile extends Fragment {
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
             progressDialog.cancel();
-            if (server_status == 0){
+            if (server_status == 1){
+                showsnackbar(server_message);
+                tv_profileName.setEnabled(false);
+                add_phone.setEnabled(false);
+                email.setEnabled(false);
+                phone.setEnabled(false);
+            }
+            else {
                 showsnackbar(server_message);
             }
 

@@ -1,5 +1,6 @@
 package android.stalwartgroup.residentguardo.Activity;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.stalwartgroup.residentguardo.Fragment.ResidentProfile;
 import android.stalwartgroup.residentguardo.R;
 import android.stalwartgroup.residentguardo.Util.Constants;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -41,8 +43,11 @@ public class HomeActivity extends AppCompatActivity {
     public static String TAG_PREAPPROVE = "preapprove";
     public static int navItemIndex = 0;
     public static int item_id;
-    private Handler mHandler;
-
+    private Handler mHandler; private static final int PERMISSION_ACCESS_COARSE_LOCATION =100;
+    private static final int PERMISSION_ACCESS_MESSAGE =101;
+    private static final int PERMISSION_ACCESS_CALL =102;
+    private static final int PERMISSIONS_STORAGE =103;
+    private static final int PERMISSIONS_CONTACT = 104;
 
 
 
@@ -50,6 +55,16 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS},
+                PERMISSION_ACCESS_MESSAGE);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
+                PERMISSION_ACCESS_CALL);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                PERMISSIONS_STORAGE);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.WRITE_CONTACTS},
+                PERMISSIONS_CONTACT);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);

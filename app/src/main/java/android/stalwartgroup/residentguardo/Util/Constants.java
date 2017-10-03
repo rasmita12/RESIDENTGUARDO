@@ -6,8 +6,8 @@ package android.stalwartgroup.residentguardo.Util;
 
 public class Constants {
     //public static  String MAINURL="http://applicationworld.net/stallwart/WebServices/";
-    public static String OFFLINE ="http://192.168.0.2/FO/Residents/";
-    //public static String MAINURL="http://192.168.0.2/FO/Webservices/";
+    //public static String OFFLINE ="http://192.168.0.2/FO/Residents/";
+    public static String OFFLINE="http://192.168.0.2/FO/Webservices/";
     public static String ONLINE="http://stalwartsecurity.in/admin/WebServices/";
     public static String MAINURL=ONLINE;
     public static String REGISTRATION="preregistration";
@@ -26,8 +26,12 @@ public class Constants {
     public static String USER_TYPE="usertype";
     public static String USER_FLAT_NAME="userflatname";
     public static String USER_APARTMENT_NAME="useraprtment";
+    public static String USER_APARTMENT_ID="useraprtmentid";
     public static String FCM_ID="fcmid";
     public static String ADDVISITORS="addVisiter";
     public static String VISITOR_LIST="VisiterList";
+    public static String RESIDENT_PROFILE="residentEditProfile";
+    public static String RESIDENT_PREAPPROVE_VISITOR="preApprovedVisitor";
+    public static String USER_PEAPPROVE_PASSCODE="userapprove";
 
 }
