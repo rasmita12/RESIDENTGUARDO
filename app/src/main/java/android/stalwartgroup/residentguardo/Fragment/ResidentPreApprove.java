@@ -3,6 +3,8 @@ package android.stalwartgroup.residentguardo.Fragment;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +37,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -86,7 +89,11 @@ public class ResidentPreApprove extends Fragment {
     File imageFile;
     Uri picUri=null;
     Boolean picAvailable=false;
+    LinearLayout lin_cuponcode;
     String profileImage;
+    String passcode;
+    TextView tv_cuponcode;
+    ImageView sharecode,copycode,refresh;
     private static final int CAMERA_REQUEST = 1888;
     private static String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS,Manifest.permission.WRITE_CONTACTS};
     private static String[] STORAGE_PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -153,10 +160,15 @@ public class ResidentPreApprove extends Fragment {
         visitor_leaving=(EditText)v.findViewById(R.id.visitor_leaving_date);
         number_of_visitor=(TextView)v.findViewById(R.id.visitor_expctd_guest);
         tv_profileName=(TextView)v.findViewById(R.id.tv_profileName);
+        tv_cuponcode=(TextView)v.findViewById(R.id.tv_cuponcode);
+        sharecode=(ImageView)v.findViewById(R.id.share_code);
+        copycode=(ImageView)v.findViewById(R.id.copy_code);
+        refresh=(ImageView)v.findViewById(R.id.refresh);
         tv_address=(TextView)v.findViewById(R.id.tv_address);
         adult=(Spinner)v.findViewById(R.id.adult_spin);
         child=(Spinner)v.findViewById(R.id.child_spin);
         linn=(RelativeLayout)v.findViewById(R.id.linn);
+        lin_cuponcode=(LinearLayout)v.findViewById(R.id.lin_cuponcode);
         generate_pass=(Button) v.findViewById(R.id.generate_pass);
         add_contact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +194,9 @@ public class ResidentPreApprove extends Fragment {
                 DatePickerDialog datepickerDialog= new DatePickerDialog(getActivity(), datee, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH));
-                datepickerDialog.getDatePicker().setMinDate(myCalendar1.getTimeInMillis());
+                long now = myCalendar1.getTimeInMillis();
+                datepickerDialog.getDatePicker().setMinDate(now);
+                datepickerDialog.getDatePicker().setMaxDate(now+(1000*60*60*24*6));
                 datepickerDialog.show();
             }
         });
@@ -210,6 +224,32 @@ public class ResidentPreApprove extends Fragment {
                  child_value = child.getSelectedItem().toString();
             }
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        sharecode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, passcode);
+                startActivity(Intent.createChooser(share, "Title of the dialog the system will open"));
+            }
+        });
+        copycode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager)getActivity(). getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Copied",passcode);
+                clipboard.setPrimaryClip(clip);
+                showsnackbar("Copied to Clipboard");
+            }
+        });
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generate_pass.setVisibility(View.VISIBLE);
+                lin_cuponcode.setVisibility(View.GONE);
+                tv_cuponcode.setText("");
             }
         });
         getuserdetails();
@@ -286,10 +326,7 @@ public class ResidentPreApprove extends Fragment {
             Toast.makeText(getContext(),"Enter Coming From",Toast.LENGTH_SHORT).show();
 
         }
-       else if(visitor_vehicle.getText().toString().trim().length()<=0){
-            Toast.makeText(getContext(),"Enter Vehicle Number",Toast.LENGTH_SHORT).show();
 
-        }
 
         else{
             checkinserver();
@@ -513,7 +550,6 @@ public class ResidentPreApprove extends Fragment {
         int server_status;
         String id, otp_no, name;
         String server_message;
-        String passcode;
         String photo;
         String charset = "UTF-8";
         String link = Constants.MAINURL+Constants.RESIDENT_PREAPPROVE_VISITOR;
@@ -593,11 +629,8 @@ public class ResidentPreApprove extends Fragment {
                 server_message = "Network Error";
                 Log.e( "SynchMobnum : doInBackground", exception.toString());
             }
-
-
             return null;
         }
-
         @Override
         protected void onPostExecute(Void user) {
             super.onPostExecute(user);
@@ -608,6 +641,10 @@ public class ResidentPreApprove extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(Constants.USER_PEAPPROVE_PASSCODE, passcode);
                 editor.commit();
+
+                generate_pass.setVisibility(View.GONE);
+                lin_cuponcode.setVisibility(View.VISIBLE);
+
             }
             else {
                 showsnackbar(server_message);

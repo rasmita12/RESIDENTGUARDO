@@ -34,4 +34,5 @@ public class Constants {
     public static String RESIDENT_PREAPPROVE_VISITOR="preApprovedVisitor";
     public static String USER_PEAPPROVE_PASSCODE="userapprove";
 
+
 }

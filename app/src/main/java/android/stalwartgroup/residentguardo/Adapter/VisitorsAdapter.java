@@ -98,7 +98,8 @@ public class VisitorsAdapter extends BaseAdapter {
         holder.tv_cmngfrom.setTag(position);
         holder.visitorsPic.setTag(holder);
 
-
+        holder.approve.setVisibility(View.GONE);
+        holder.reject.setVisibility(View.GONE);
         String name=_pos.getName();
         String mobile=_pos.getMobile();
         String comingfrom=_pos.getComing_from();

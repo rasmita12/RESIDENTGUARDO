@@ -29,7 +29,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="270dp"
         android:background="@color/White"
         android:layout_alignParentBottom="true">
     </RelativeLayout>
@@ -37,14 +37,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="-10dp"
+        android:layout_marginBottom="-20dp"
         android:layout_below="@+id/relative_fodetail"
         android:background="@drawable/backgroundborder">
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:id="@+id/relative_design"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"

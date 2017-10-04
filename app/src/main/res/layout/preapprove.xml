@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:id="@+id/linn">
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,11 +56,7 @@
             android:layout_marginLeft="30dp"
             android:id="@+id/tv_address"
             android:text="F101, Vaswani Reverse"/>
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/resident_profileimg"
-            >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -176,30 +174,56 @@
                 android:layout_marginTop="30dp"
                 android:textStyle="bold"
                 android:background="@drawable/button_login_btn"/>
-        </LinearLayout>
-        </ScrollView>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal"
-            android:visibility="gone">
-            <Button
-                android:layout_width="100dp"
-                android:text="edit"
-                android:textColor="@color/black"
-                android:background="@drawable/layout_background"
-                android:layout_height="50dp" />
-            <Button
-                android:layout_width="100dp"
-                android:text="save"
-                android:layout_marginLeft="30dp"
-                android:textColor="@color/black"
-                android:background="@drawable/layout_background"
-                android:layout_height="50dp" />
+            <LinearLayout
+                android:id="@+id/lin_cuponcode"
+                android:layout_alignParentBottom="true"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:background="@color/LoginButtoncolor"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_cuponcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="CODE1234"
+                    android:textColor="@color/White" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="50dp"
+                    android:id="@+id/share_code"
+                    android:background="@mipmap/ic_share_black_24dp"
+                    android:backgroundTint="@color/White" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/copy_code"
+                    android:background="@mipmap/ic_content_copy_black_24dp"
+                    android:backgroundTint="@color/White" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/refresh"
+                    android:background="@mipmap/ic_loop_black_24dp"
+                    android:backgroundTint="@color/White" />
+            </LinearLayout>
         </LinearLayout>
+
+
     </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
